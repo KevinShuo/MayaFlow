@@ -1,0 +1,19 @@
+QFrame#checkWidget{
+    background-color:#FF4D4D;
+    border:1px solid #FF4D4D;
+    border-radius:5px;
+}
+
+QFrame#checkWidget:hover{
+    background-color:#ffecda;
+    border:1px solid #ffecda;
+    border-radius:5px;
+}
+
+QLabel{
+    color:#FFFFFF;
+    font-size:13px;
+    font-weight:bold;
+    font-family:"Arial";
+}
+

@@ -1,0 +1,260 @@
+proj_csx2:
+  asset:
+    chr:
+      Mod:
+        - file_name: check_hierarchy
+          show_name: 检查Maya大纲层级
+          order: 0
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查Maya层级
+        - file_name: check_double_name
+          show_name: 检查重名
+          order: 1
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查Maya里重复命名的层级
+        - file_name: check_invalid_name
+          show_name: 检查命名过长/没有中文字符
+          order: 2
+          show: true
+          allow_skip: false
+          allow_fix: false
+          description: 检查文件中所有组/物体命名是否正确，名称不能过长，需使用英文命名，不得使用中文
+        - file_name: check_normal_lock
+          show_name: 检查锁定法线
+          order: 5
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 锁定法线
+        - file_name: check_uv_sets
+          show_name: 检查UVSets
+          order: 6
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 锁定UV集
+        - file_name: check_uv_cross_quadrant
+          show_name: 检查UV跨象限
+          order: 7
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查UV跨象限
+        - file_name: check_non_manifold_points
+          show_name: 检查非流形点
+          order: 8
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查模型上非流形点
+        - file_name: check_error_point
+          show_name: 检查在模型外的点
+          order: 9
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查在模型外的点
+        - file_name: check_unknown_node
+          show_name: 检查未知节点
+          order: 10
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查未知节点
+        - file_name: check_unknown_plugin
+          show_name: 检查未知插件
+          order: 11
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查未知插件
+        - file_name: check_freeze_transformations
+          show_name: 检查冻结变换
+          order: 12
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查是否冻结变换
+        - file_name: check_history
+          show_name: 检查历史
+          order: 13
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查是否场景存在历史
+        - file_name: check_default_material
+          show_name: 检查是否只包含默认材质
+          order: 14
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查是否只包含默认材质
+        - file_name: check_unknown_object
+          show_name: 检查有问题多边形（破面,非流行点,超过五边形面）
+          order: 14
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查有问题多边形（破面,非流行点,超过五边形面）
+        - file_name: check_group
+          show_name: 检查组名后是不是GRP结尾
+          order: 14
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查组名后是不是GRP结尾
+        - file_name: check_subdivide
+          show_name: 检查有没有模型按3（开启细分）
+          order: 15
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查有没有模型按3
+      Shader:
+        - file_name: check_arnold_node
+          show_name: 检查是否都是Arnold节点
+          order: 0
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查是否都是Arnold节点
+        - file_name: check_face_material
+          show_name: 检查选面赋予材质
+          order: 1
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查选面赋予材质
+        - file_name: check_close_generate_tx
+          show_name: 检查关闭自动转换TX
+          order: 2
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查关闭自动转换TX
+        - file_name: check_subdivide
+          show_name: 检查有没有模型按3（开启细分）
+          order: 3
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查有没有模型按3
+    env:
+      parent: "{proj_csx2}{asset}{chr}"
+    lay:
+      parent: "{proj_csx2}{asset}{chr}"
+    prp:
+      parent: "{proj_csx2}{asset}{chr}"
+    veh:
+      parent: "{proj_csx2}{asset}{chr}"
+
+proj_temp_test:
+  asset:
+    Char:
+      Surfacing:
+        - file_name: check_hierarchy
+          show_name: 检查Maya大纲层级
+          order: 0
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查Maya层级
+        - file_name: check_double_name
+          show_name: 检查重名
+          order: 1
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查Maya里重复命名的层级
+        - file_name: check_invalid_name
+          show_name: 检查命名过长/没有中文字符
+          order: 2
+          show: true
+          allow_skip: false
+          allow_fix: false
+          description: 检查文件中所有组/物体命名是否正确，名称不能过长，需使用英文命名，不得使用中文
+        - file_name: check_object_above_the_grid
+          show_name: 检查模型位于地面之上
+          order: 3
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 模型位于网格之上
+        - file_name: check_object_translate
+          show_name: 检查资产是否冻结变换，坐标归零，位于世界坐标中心
+          order: 4
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查资产是否冻结变换，坐标归零，位于世界坐标中心
+        - file_name: check_normal_lock
+          show_name: 检查锁定法线
+          order: 5
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 锁定法线
+        - file_name: check_uv_sets
+          show_name: 检查UVSets
+          order: 6
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 锁定UV集
+        - file_name: check_uv_cross_quadrant
+          show_name: 检查UV跨象限
+          order: 7
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查UV跨象限
+        - file_name: check_non_manifold_points
+          show_name: 检查非流形点
+          order: 8
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查模型上非流形点
+        - file_name: check_error_point
+          show_name: 检查在模型外的点
+          order: 9
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查在模型外的点
+        - file_name: check_unknown_node
+          show_name: 检查未知节点
+          order: 10
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查未知节点
+        - file_name: check_unknown_plugin
+          show_name: 检查未知插件
+          order: 11
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查未知插件
+        - file_name: check_freeze_transformations
+          show_name: 检查冻结变换
+          order: 12
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查是否冻结变换
+        - file_name: check_history
+          show_name: 检查历史
+          order: 13
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查是否场景存在历史
+    Prop:
+      parent: "{proj_temp_test}{asset}{Char}"
+    Set:
+      parent: "{proj_temp_test}{asset}{Char}"

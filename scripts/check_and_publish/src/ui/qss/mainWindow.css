@@ -1,0 +1,193 @@
+/* 主窗口背景 */
+QFrame#mainWindow, QFrame#asset_ui_main {
+    background-color: #1A1F2B;
+    background-image: radial-gradient(circle, #1A1F2B, #111722);
+}
+
+/* GroupBox 样式 */
+QGroupBox {
+    font-size: 15px;
+    font-family: "Arial";
+    border: 1px solid #292e3b;
+    border-radius: 15px;
+    background-color: #292e3b;
+    padding: 10px;
+}
+
+/* GroupBox 标签 */
+QGroupBox QLabel {
+    font-size: 12px;
+    font-family: "Arial";
+    color: #FFFFFF;
+}
+
+QGroupBox#task_information QLabel {
+    font-size: 13px;
+    font-family: "Arial";
+    font-weight: bold;
+    color: #FFFFFF;
+    margin-top: 6px;
+}
+
+/* ComboBox 样式 */
+QComboBox {
+    background-color: qlineargradient(spread:pad,
+    x1: 0,
+    y1: 0,
+    x2: 1,
+    y2: 1,
+    stop: 0 #2C3A4F,
+    stop: 1 #1A1F2B);
+    border: 2px solid #414654;
+    border-radius: 15px;
+    font-size: 13px;
+    font-family: "Arial";
+    color: #FFFFFF;
+    padding-left: 10px;
+}
+
+QComboBox::hover {
+    border: 1px solid #FF4D4D;
+}
+
+/* 列表控件样式 */
+QListWidget {
+    padding: 10px 5px 5px;
+    background-color: #292e3b;
+    border: 1px solid #1A1F2B;
+    border-radius: 15px;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-family: "Arial", serif;
+}
+
+QListWidget::item:selected {
+    background-color: #FF4D4D;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+QListWidget::item:hover {
+    background-color: #2C3A4F;
+}
+
+/* 文本框和输入框样式 */
+QLineEdit, QTextEdit {
+    color: #FFFFFF;
+    background-color: #1A1F2B;
+    border: 2px solid #414654;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: "Microsoft YaHei", serif;
+    padding: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 复选框样式 */
+QCheckBox {
+    spacing: 5px;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-family: "Arial";
+}
+
+QCheckBox::indicator {
+    width: 16px;
+    height: 16px;
+}
+
+QCheckBox:checked {
+    color: #ffecda;
+    font-weight: bold;
+}
+
+/* 按钮样式 */
+QFrame#mainWindow QPushButton, QFrame#frame_shot_ui QPushButton {
+    color: #FFFFFF;
+    font-size: 18px;
+    background-color: qlineargradient(spread:pad,
+    x1: 0,
+    y1: 0,
+    x2: 1,
+    y2: 1,
+    stop: 0 #2C3A4F,
+    stop: 1 #414654);
+    border-radius: 5px;
+    height: 30%;
+    width: 200%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+QFrame#mainWindow QPushButton:hover, QFrame#frame_shot_ui QPushButton:hover {
+    background-color: #FF4D4D;
+    box-shadow: 0px 6px 12px rgba(255, 77, 77, 0.5);
+    color: #1A1F2B;
+}
+
+/* 特殊按钮样式 */
+QFrame#mainWindow QPushButton#submit_file, QFrame#frame_shot_ui QPushButton#Shot_Submit {
+    background-color: #FF4D4D;
+    font-weight: bold;
+}
+
+QFrame#mainWindow QPushButton#submit_file:hover, QFrame#frame_shot_ui QPushButton#Shot_Submit:hover {
+    background-color: #ffecda;
+    color: #292e3b;
+}
+
+/* 单选按钮样式 */
+QRadioButton {
+    font-size: 14px;
+    font-family: "Arial";
+    color: #FFFFFF;
+}
+
+QFrame#common_frame QRadioButton {
+    color: #e0e0e0;
+    font-size: 15px;
+    font-family: "Arial";
+    height: 30%;
+    width: 100%;
+}
+
+QFrame#common_frame QRadioButton::checked {
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #FF4D4D;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+/* TreeView 样式 */
+QTreeView {
+    background-color: #1A1F2B;
+    border: 1px solid #414654;
+    border-radius: 17px;
+    font-family: "Arial";
+    font-size: 15px;
+    color: #e0e0e0;
+}
+
+QTreeView::item:hover, QTreeView::item:selected {
+    background-color: #ffecda;
+    color: #1A1F2B;
+    font-weight: bold;
+}
+
+/* HeaderView 样式 */
+QHeaderView {
+    background-color: #414654;
+    border-radius: 5px;
+    color: #e0e0e0;
+    font-size: 13px;
+    font-family: "Arial", serif;
+    font-weight: bold;
+}
+
+/* 顶部信息样式 */
+QFrame#head_frame QLabel {
+    font-size: 14px;
+    font-family: "Arial", serif;
+    color: #e0e0e0;
+    margin-top: 5px;
+}
