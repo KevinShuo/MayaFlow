@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>260</width>
-    <height>330</height>
+    <width>350</width>
+    <height>429</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -69,7 +69,7 @@ QLabel#label_name{
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QComboBox" name="comboBox"/>
+         <widget class="QComboBox" name="comboBox_project"/>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_2">
@@ -81,7 +81,7 @@ QLabel#label_name{
         <item row="1" column="1">
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QRadioButton" name="radioButton_2">
+           <widget class="QRadioButton" name="radioButton_asset">
             <property name="text">
              <string>Asset</string>
             </property>
@@ -91,7 +91,7 @@ QLabel#label_name{
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton">
+           <widget class="QRadioButton" name="radioButton_shot">
             <property name="text">
              <string>Shot</string>
             </property>
@@ -116,6 +116,9 @@ QLabel#label_name{
       </item>
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
         <widget class="QWidget" name="page_asset">
          <layout class="QFormLayout" name="formLayout_2">
           <property name="horizontalSpacing">
@@ -144,7 +147,7 @@ QLabel#label_name{
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QComboBox" name="comboBox_2">
+           <widget class="QComboBox" name="comboBox_asset_pipeline">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -161,17 +164,64 @@ QLabel#label_name{
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QListWidget" name="listWidget"/>
+           <widget class="QListWidget" name="listWidget_asset_task"/>
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="page_shot"/>
+        <widget class="QWidget" name="page_shot">
+         <layout class="QFormLayout" name="formLayout_3">
+          <property name="horizontalSpacing">
+           <number>12</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>12</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>阶段</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="comboBox_shot_pipeline"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>镜头</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QTreeWidget" name="treeWidget_shot_task">
+            <column>
+             <property name="text">
+              <string notr="true">1</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="pushButton_submit">
         <property name="text">
-         <string>PushButton</string>
+         <string>确定</string>
         </property>
        </widget>
       </item>
