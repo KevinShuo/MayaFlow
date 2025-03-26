@@ -1,0 +1,11 @@
+QLabel {
+    font-family: "Arial", serif;
+    font-size: 12px;
+    padding-right: 5px;
+}
+
+QComboBox{
+    padding: 5px;
+    font-family: "Arial", serif;
+    font-size: 12px;
+}
