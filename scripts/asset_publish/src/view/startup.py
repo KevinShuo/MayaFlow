@@ -22,6 +22,8 @@ class StartupView(StartupUI):
         self.combo_module.currentTextChanged.connect(self.change_module)
         self.combo_asset_type.currentTextChanged.connect(self.change_asset_type)
         self.combo_pipeline.currentTextChanged.connect(self.change_pipeline)
+        self.combo_eps.currentTextChanged.connect(self.change_eps)
+        self.combo_seq.currentTextChanged.connect(self.change_seq)
 
     def build_ui(self):
         self.setup_ui()
@@ -41,7 +43,6 @@ class StartupView(StartupUI):
         self.init_pipeline(self.modules)
 
     def change_module(self, module):
-        self.list_task.clear()
         self.init_pipeline(module)
         self._hide_module_widget()
         self._get_task_data()
@@ -72,11 +73,9 @@ class StartupView(StartupUI):
         self.combo_pipeline.addItems(sorted(pipeline_tasks))
 
     def change_asset_type(self, asset_type):
-        self.list_task.clear()
         self._get_task_data()
 
     def change_pipeline(self, pipeline):
-        self.list_task.clear()
         if self.modules == "Asset":
             self.init_asset_type()
         else:
@@ -114,6 +113,10 @@ class StartupView(StartupUI):
                 eps_list.append(eps)
         self.combo_eps.addItems(sorted(eps_list))
 
+    def change_eps(self, seq):
+        self.init_seq()
+        self._get_task_data()
+
     def init_seq(self):
         self.combo_seq.clear()
         cgt_task = CGTShotTaskProject(self.project_db, NormalUserStrategy())
@@ -130,7 +133,11 @@ class StartupView(StartupUI):
                 seq_list.append(seq)
         self.combo_seq.addItems(sorted(seq_list))
 
+    def change_seq(self, seq):
+        self._get_task_data()
+
     def _get_task_data(self):
+        self.list_task.clear()
         if self.modules == "Asset":
             cgt_task = CGTAssetTaskProject(self.project_db, NormalUserStrategy())
             datas = cgt_task.get_data([["pipeline.entity", "=", self.pipeline], "and",
@@ -146,14 +153,18 @@ class StartupView(StartupUI):
                 item.setData(Qt.UserRole, asset)
         else:
             cgt_task = CGTShotTaskProject(self.project_db, NormalUserStrategy())
-            shots_data = cgt_task.get_data([["pipeline.entity", "=", self.pipeline]],
-                                           fields_list=["shot.entity", "task.entity"])
+            shots_data = cgt_task.get_data([["pipeline.entity", "=", self.pipeline], "and",
+                                            ["eps.entity", "=", self.eps], "and",
+                                            ["shot.link_seq", "=", self.seq]],
+                                           fields_list=["eps.entity", "shot.link_seq", "shot.entity", "task.entity"])
             if not shots_data:
                 return
             for shot in sorted(shots_data, key=lambda x: x.get("shot.entity")):
+                eps = shot.get("eps.entity")
+                seq = shot.get("shot.link_seq")
                 shot_name = shot["shot.entity"]
                 task = shot["task.entity"]
-                name = "[%s]%s" % (task, shot_name)
+                name = "[%s]%s_%s_Shot%s" % (task, eps, seq, shot_name)
                 self.list_task.addItem(name)
 
     def _hide_module_widget(self):
@@ -187,3 +198,7 @@ class StartupView(StartupUI):
     @property
     def eps(self):
         return self.combo_eps.currentText()
+
+    @property
+    def seq(self):
+        return self.combo_seq.currentText()
