@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
-from PySide2.QtWidgets import QWidget, QFrame, QVBoxLayout, QTabWidget, QFormLayout, QLabel, QComboBox, QListWidget
+from PySide2.QtWidgets import QWidget, QFrame, QVBoxLayout, QFormLayout, QLabel, QComboBox, QListWidget
 
 
 class StartupUI(QWidget):
@@ -18,6 +18,11 @@ class StartupUI(QWidget):
         label_project_name = QLabel("Project:")
         self.combo_project_name = QComboBox()
         form_top.addRow(label_project_name, self.combo_project_name)
+        # module
+        label_module = QLabel("Module:")
+        self.combo_module = QComboBox()
+        self.combo_module.addItems(["Asset", "Shot"])
+        form_top.addRow(label_module, self.combo_module)
         label_pipeline = QLabel("Pipeline:")
         self.combo_pipeline = QComboBox()
         form_top.addRow(label_pipeline, self.combo_pipeline)
