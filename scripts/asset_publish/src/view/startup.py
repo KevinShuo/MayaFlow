@@ -13,7 +13,7 @@ class StartupView(StartupUI):
         super(StartupView, self).__init__(parent)
         self.project_db = None
         self.asset_fields = ["asset.entity", "task.entity", "task.artist", "task.account", "task.start_date",
-                             "task.end_date"]
+                             "task.end_date", "asset_type.entity"]
         self.build_ui()
         self.init_slot()
 

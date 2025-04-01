@@ -2,7 +2,7 @@
 import os
 
 from PySide2.QtWidgets import QWidget, QFrame, QVBoxLayout, QFormLayout, QLabel, QComboBox, QListWidget, QHBoxLayout, \
-    QPushButton
+    QPushButton, QGroupBox
 
 
 class StartupUI(QWidget):
@@ -51,5 +51,15 @@ class StartupUI(QWidget):
         vbox_left.addWidget(frame_top)
         self.butn_submit = QPushButton("Submit")
         vbox_left.addWidget(self.butn_submit, 1)
-
         self.hbox_main.addWidget(frame_left)
+        # right
+        frame_right = QFrame()
+        vbox_right = QVBoxLayout(frame_right)
+        # group info
+        group_info = QGroupBox("Information")
+        form_info = QFormLayout(group_info)
+        label_task_name = QLabel("Task:")
+        self.label_task_name = QLabel()
+        form_info.addRow(label_task_name, self.label_task_name)
+
+        self.hbox_main.addWidget(frame_right, 1)
