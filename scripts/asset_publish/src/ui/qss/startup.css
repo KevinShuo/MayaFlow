@@ -2,10 +2,25 @@ QLabel {
     font-family: "Arial", serif;
     /*font-size: 12px;*/
     padding-right: 5px;
+    /*font-style: oblique;*/
 }
 
-QComboBox{
+QLabel#tip_format {
+    font-family: "fangsong", serif;
+    font-weight: bold;
+    /*font-style: oblique;*/
+    padding: 3px 3px;
+    font-size: 14px;
+    color: #c0955d;
+}
+
+QComboBox {
     padding: 5px;
     font-family: "Arial", serif;
     /*font-size: 12px;*/
+}
+
+QListWidget::item {
+    font-family: "Arial", serif;
+    padding: 5px;
 }
