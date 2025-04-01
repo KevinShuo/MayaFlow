@@ -37,10 +37,19 @@ class StartupView(StartupUI):
 
     def change_project(self, project):
         self.combo_pipeline.clear()
-        self.combo_asset_type.clear()
         self.project_db = "proj_%s" % project.lower()
+        self.init_pipeline(self.modules)
+
+    def change_module(self, module):
+        self.list_task.clear()
+        self.init_pipeline(module)
+        self._hide_module_widget()
+        self._get_task_data()
+
+    def init_pipeline(self, module):
+        self.combo_pipeline.clear()
         pipeline_tasks = []
-        if self.modules == "Asset":
+        if module == "Asset":
             cgt_task = CGTAssetTaskProject(self.project_db, NormalUserStrategy())
             assets_data = cgt_task.get_data([], fields_list=["pipeline.entity", 'asset_type.entity'])
             if not assets_data:
@@ -62,18 +71,17 @@ class StartupView(StartupUI):
             return
         self.combo_pipeline.addItems(sorted(pipeline_tasks))
 
-    def change_module(self, module):
-        self.list_task.clear()
-        self._hide_module_widget()
-        self._get_task_data()
-
     def change_asset_type(self, asset_type):
         self.list_task.clear()
         self._get_task_data()
 
     def change_pipeline(self, pipeline):
         self.list_task.clear()
-        self.init_asset_type()
+        if self.modules == "Asset":
+            self.init_asset_type()
+        else:
+            self.init_eps()
+            self.init_seq()
         self._get_task_data()
 
     def init_asset_type(self):
@@ -92,7 +100,35 @@ class StartupView(StartupUI):
         self.combo_asset_type.addItems(sorted(assets_type))
 
     def init_eps(self):
-        pass
+        self.combo_eps.clear()
+        cgt_task = CGTShotTaskProject(self.project_db, NormalUserStrategy())
+        datas = cgt_task.get_data([["pipeline.entity", "=", self.pipeline]], ["eps.entity"])
+        if not datas:
+            return
+        eps_list = []
+        for eps in datas:
+            if not eps:
+                continue
+            eps = eps.get("eps.entity")
+            if eps not in eps_list:
+                eps_list.append(eps)
+        self.combo_eps.addItems(sorted(eps_list))
+
+    def init_seq(self):
+        self.combo_seq.clear()
+        cgt_task = CGTShotTaskProject(self.project_db, NormalUserStrategy())
+        datas = cgt_task.get_data([["pipeline.entity", "=", self.pipeline], "and",
+                                   ['eps.entity', '=', self.eps]], ["shot.link_seq"])
+        if not datas:
+            return
+        seq_list = []
+        for d in datas:
+            if not d:
+                continue
+            seq = d.get("shot.link_seq")
+            if seq not in seq_list:
+                seq_list.append(seq)
+        self.combo_seq.addItems(sorted(seq_list))
 
     def _get_task_data(self):
         if self.modules == "Asset":
@@ -108,7 +144,6 @@ class StartupView(StartupUI):
                 self.list_task.addItem(name)
                 item = self.list_task.findItems(name, Qt.MatchExactly)[0]
                 item.setData(Qt.UserRole, asset)
-                print(item.data(Qt.UserRole))
         else:
             cgt_task = CGTShotTaskProject(self.project_db, NormalUserStrategy())
             shots_data = cgt_task.get_data([["pipeline.entity", "=", self.pipeline]],
@@ -124,13 +159,17 @@ class StartupView(StartupUI):
     def _hide_module_widget(self):
         if self.modules == "Asset":
             self.label_eps.setHidden(True)
+            self.label_seq.setHidden(True)
             self.label_asset_type.setHidden(False)
             self.combo_eps.setHidden(True)
+            self.combo_seq.setHidden(True)
             self.combo_asset_type.setHidden(False)
         else:
             self.label_eps.setHidden(False)
+            self.label_seq.setHidden(False)
             self.label_asset_type.setHidden(True)
             self.combo_eps.setHidden(False)
+            self.combo_seq.setHidden(False)
             self.combo_asset_type.setHidden(True)
 
     @property
@@ -144,3 +183,7 @@ class StartupView(StartupUI):
     @property
     def asset_type(self):
         return self.combo_asset_type.currentText()
+
+    @property
+    def eps(self):
+        return self.combo_eps.currentText()

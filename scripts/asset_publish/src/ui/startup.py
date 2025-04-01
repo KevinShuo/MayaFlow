@@ -2,7 +2,7 @@
 import os
 
 from PySide2.QtWidgets import QWidget, QFrame, QVBoxLayout, QFormLayout, QLabel, QComboBox, QListWidget, QHBoxLayout, \
-    QPushButton, QGroupBox
+    QPushButton, QGroupBox, QScrollArea
 
 
 class StartupUI(QWidget):
@@ -41,6 +41,10 @@ class StartupUI(QWidget):
         self.label_eps = QLabel("Episodes:")
         self.combo_eps = QComboBox()
         form_top.addRow(self.label_eps, self.combo_eps)
+        # sequence
+        self.label_seq = QLabel("Sequence:")
+        self.combo_seq = QComboBox()
+        form_top.addRow(self.label_seq, self.combo_seq)
         # task
         label_tip = QLabel(u"格式: [任务名称] 资产名称")
         label_tip.setObjectName("tip_format")
@@ -58,8 +62,20 @@ class StartupUI(QWidget):
         # group info
         group_info = QGroupBox("Information")
         form_info = QFormLayout(group_info)
+        # task name
         label_task_name = QLabel("Task:")
         self.label_task_name = QLabel()
         form_info.addRow(label_task_name, self.label_task_name)
-
-        self.hbox_main.addWidget(frame_right, 1)
+        # pipeline
+        label_info_pipeline = QLabel("Pipeline:")
+        self.label_info_pipeline = QLabel()
+        form_info.addRow(label_info_pipeline, self.label_info_pipeline)
+        # artist
+        label_artist = QLabel("Artist:")
+        self.label_artist = QLabel()
+        form_info.addRow(label_artist, self.label_artist)
+        vbox_right.addWidget(group_info)
+        # note
+        self.scroll_node = QScrollArea()
+        vbox_right.addWidget(self.scroll_node, 1)
+        self.hbox_main.addWidget(frame_right)
