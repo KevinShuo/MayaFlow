@@ -6,6 +6,8 @@ from PySide2.QtWidgets import QWidget, QFrame, QVBoxLayout, QFormLayout, QLabel,
     QPushButton, QGroupBox, QScrollArea
 from ct_filebox_drag_in.add_timelog import QTextEdit
 
+from scripts.asset_publish.src.ui.note import ImageLabel
+
 
 class StartupUI(QWidget):
     def __init__(self, parent=None):
@@ -85,7 +87,7 @@ class StartupUI(QWidget):
         form_info.addRow(label_status, self.label_status)
         vbox_right.addWidget(group_info)
         # img task
-        self.label_task_image = QLabel()
+        self.label_task_image = ImageLabel(None)
         self.label_task_image.setStyleSheet("QLabel{background-color:lightgrey;height:100%;}")
         self.label_task_image.setHidden(True)
         hbox_group.addWidget(self.label_task_image, 1, Qt.AlignVCenter)

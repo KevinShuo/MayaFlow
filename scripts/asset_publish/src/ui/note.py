@@ -14,6 +14,9 @@ class ImageLabel(QLabel):
         if event.button() == Qt.LeftButton:
             os.startfile(self.path)
 
+    def set_path(self, path):
+        self.path = path
+
 
 class NoteWidget(QFrame):
     def __init__(self, parent=None):

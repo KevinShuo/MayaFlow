@@ -217,6 +217,7 @@ class StartupView(StartupUI):
             self.label_task_image.setHidden(False)
             min, max = json.loads(task_image_data)[0].get("min"), json.loads(task_image_data)[0].get("max")
             max_local_path = download_image(max, CacheImgStratepy("TaskChoose"))
+            self.label_task_image.set_path(max_local_path)
             pixmap = QPixmap(max_local_path)
             pixmap = pixmap.scaledToHeight(config.G_image_height, Qt.SmoothTransformation)
             self.label_task_image.setPixmap(pixmap)
