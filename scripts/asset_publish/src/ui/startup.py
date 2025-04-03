@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
+from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QWidget, QFrame, QVBoxLayout, QFormLayout, QLabel, QComboBox, QListWidget, QHBoxLayout, \
     QPushButton, QGroupBox, QScrollArea
 
@@ -61,7 +62,10 @@ class StartupUI(QWidget):
         vbox_right = QVBoxLayout(frame_right)
         # group info
         group_info = QGroupBox("Information")
-        form_info = QFormLayout(group_info)
+        hbox_group = QHBoxLayout(group_info)
+        hbox_group.setContentsMargins(0, 0, 0, 0)
+        form_info = QFormLayout()
+        hbox_group.addLayout(form_info)
         # task name
         label_task_name = QLabel("Task:")
         self.label_task_name = QLabel()
@@ -74,7 +78,16 @@ class StartupUI(QWidget):
         label_artist = QLabel("Artist:")
         self.label_artist = QLabel()
         form_info.addRow(label_artist, self.label_artist)
+        # status
+        label_status = QLabel("Status:")
+        self.label_status = QLabel()
+        form_info.addRow(label_status, self.label_status)
         vbox_right.addWidget(group_info)
+        # img task
+        self.label_task_image = QLabel()
+        self.label_task_image.setStyleSheet("QLabel{background-color:lightgrey;height:100%;}")
+        self.label_task_image.setHidden(True)
+        hbox_group.addWidget(self.label_task_image, 1, Qt.AlignVCenter)
         # note
         self.scroll_node = QScrollArea()
         vbox_right.addWidget(self.scroll_node, 1)

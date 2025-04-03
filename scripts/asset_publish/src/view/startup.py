@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 from PySide2.QtCore import Qt
+from PySide2.QtWidgets import QListWidgetItem
 
 from m_cgt_py2.src.asset.task_project import CGTAssetTaskProject
 from m_cgt_py2.src.login import NormalUserStrategy
 from m_cgt_py2.src.project.info import CGTProjectInfo
 from m_cgt_py2.src.shot.task_project import CGTShotTaskProject
 from scripts.asset_publish.src.ui.startup import StartupUI
+from .. import config
+from ..config.status_colors import StatusColor
 
 
 class StartupView(StartupUI):
@@ -13,7 +16,7 @@ class StartupView(StartupUI):
         super(StartupView, self).__init__(parent)
         self.project_db = None
         self.asset_fields = ["asset.entity", "task.entity", "task.artist", "task.account", "task.start_date",
-                             "task.end_date", "asset_type.entity"]
+                             "task.end_date", "asset_type.entity", "pipeline.entity", "task.status"]
         self.build_ui()
         self.init_slot()
 
@@ -24,8 +27,10 @@ class StartupView(StartupUI):
         self.combo_pipeline.currentTextChanged.connect(self.change_pipeline)
         self.combo_eps.currentTextChanged.connect(self.change_eps)
         self.combo_seq.currentTextChanged.connect(self.change_seq)
+        self.list_task.itemClicked.connect(self.select_task)
 
     def build_ui(self):
+        self.resize(*config.G_window_size)
         self.setup_ui()
         self.init_projects()
         self._hide_module_widget()
@@ -167,6 +172,38 @@ class StartupView(StartupUI):
                 name = "[%s]%s_%s_Shot%s" % (task, eps, seq, shot_name)
                 self.list_task.addItem(name)
 
+    def select_task(self, item):
+        # type: (QListWidgetItem) -> None
+        text = item.text()
+        data = item.data(Qt.UserRole)
+        # 资产
+        if self.modules == "Asset":
+            self.setup_asset(text, data)
+        # 镜头
+        elif self.modules == "Shot":
+            pass
+
+    def setup_asset(self, item_text, data):
+        # type: (str,dict) -> None
+        task_name = item_text.split("]")[-1]
+        self.label_task_name.setText(task_name)
+        # pipeline
+        pipeline = data.get("pipeline.entity")
+        self.label_info_pipeline.setText(pipeline)
+        # artist
+        artist = data.get("task.artist")
+        self.label_artist.setText(artist)
+        # status
+        status = data.get("task.status")
+        self.label_status.setText(status)
+        status_color = StatusColor.get_color(status)
+        if status_color:
+            self.label_status.setStyleSheet(
+                "QLabel {color: white;background-color: %s;font-weight: bold;text-align: center;border-radius:5px;}" % status_color)
+        else:
+            self.label_status.setStyleSheet(
+                "QLabel {color: black;background-color: transparent;font-weight: bold;text-align: center;border-radius:5px;}")
+
     def _hide_module_widget(self):
         if self.modules == "Asset":
             self.label_eps.setHidden(True)
@@ -202,3 +239,6 @@ class StartupView(StartupUI):
     @property
     def seq(self):
         return self.combo_seq.currentText()
+
+    # def resizeEvent(self, event):
+    #     print(event.size())
