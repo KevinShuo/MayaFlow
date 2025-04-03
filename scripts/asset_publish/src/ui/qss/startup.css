@@ -24,8 +24,20 @@ QListWidget::item {
     font-family: "Arial", serif;
     padding: 5px;
 }
+QGroupBox{
+    font-size: 15px;
+    text-align: center;
+    font-family: "Arial Black", serif;
+}
 
 QGroupBox > QLabel{
     padding: 7px;
     font-family: "Verdana", serif;
+}
+
+QTextEdit{
+    font-family: "Arial", serif;
+    font-style: oblique;
+    padding: 5px;
+    font-size: 13px;
 }

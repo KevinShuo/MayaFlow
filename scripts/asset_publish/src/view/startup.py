@@ -1,14 +1,21 @@
 # -*- coding: utf-8 -*-
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QListWidgetItem
+import json
 
+from PySide2.QtCore import Qt
+from PySide2.QtGui import QPixmap
+from PySide2.QtWidgets import QListWidgetItem, QVBoxLayout, QWidget
+
+from m_cgt_py2.src.asset.task import CGTAssetTask
 from m_cgt_py2.src.asset.task_project import CGTAssetTaskProject
 from m_cgt_py2.src.login import NormalUserStrategy
 from m_cgt_py2.src.project.info import CGTProjectInfo
 from m_cgt_py2.src.shot.task_project import CGTShotTaskProject
 from scripts.asset_publish.src.ui.startup import StartupUI
+from scripts.cache_path.image import CacheImgStratepy
 from .. import config
 from ..config.status_colors import StatusColor
+from ..ui.note import NoteWidget
+from ..utils.download_img import download_image
 
 
 class StartupView(StartupUI):
@@ -16,7 +23,7 @@ class StartupView(StartupUI):
         super(StartupView, self).__init__(parent)
         self.project_db = None
         self.asset_fields = ["asset.entity", "task.entity", "task.artist", "task.account", "task.start_date",
-                             "task.end_date", "asset_type.entity", "pipeline.entity", "task.status"]
+                             "task.end_date", "asset_type.entity", "pipeline.entity", "task.status", "task.image"]
         self.build_ui()
         self.init_slot()
 
@@ -28,6 +35,7 @@ class StartupView(StartupUI):
         self.combo_eps.currentTextChanged.connect(self.change_eps)
         self.combo_seq.currentTextChanged.connect(self.change_seq)
         self.list_task.itemClicked.connect(self.select_task)
+        self.combo_version.currentIndexChanged.connect(self.change_version)
 
     def build_ui(self):
         self.resize(*config.G_window_size)
@@ -184,7 +192,7 @@ class StartupView(StartupUI):
             pass
 
     def setup_asset(self, item_text, data):
-        # type: (str,dict) -> None
+        task_id = data.get("id")
         task_name = item_text.split("]")[-1]
         self.label_task_name.setText(task_name)
         # pipeline
@@ -203,6 +211,73 @@ class StartupView(StartupUI):
         else:
             self.label_status.setStyleSheet(
                 "QLabel {color: black;background-color: transparent;font-weight: bold;text-align: center;border-radius:5px;}")
+        # 下载图片
+        task_image_data = data.get("task.image")
+        if task_image_data:
+            self.label_task_image.setHidden(False)
+            min, max = json.loads(task_image_data)[0].get("min"), json.loads(task_image_data)[0].get("max")
+            max_local_path = download_image(max, CacheImgStratepy("TaskChoose"))
+            pixmap = QPixmap(max_local_path)
+            pixmap = pixmap.scaledToHeight(config.G_image_height, Qt.SmoothTransformation)
+            self.label_task_image.setPixmap(pixmap)
+        else:
+            self.label_task_image.setHidden(True)
+        cgt_asset = CGTAssetTask(self.project_db, task_id, NormalUserStrategy())
+        # 显示版本信息
+        version_data = cgt_asset.versions
+        self.combo_version.clear()
+        self.textEdit_version.clear()
+        if version_data:
+            for index, version in enumerate(
+                    sorted([v for v in version_data], key=lambda x: x.get("entity"),
+                           reverse=True)):
+                self.combo_version.addItem(version.get("entity"))
+                self.combo_version.setItemData(index, version, Qt.UserRole)
+            self.change_version(0)
+        # 显示note信息
+        note_data = cgt_asset.notes
+        if note_data:
+            widget_note_scroll = QWidget()
+            vbox_note = QVBoxLayout(widget_note_scroll)
+            for index, note in enumerate(sorted(note_data, key=lambda x: x.get("time"), reverse=True)):
+                # print(note)
+                note_widget = NoteWidget(widget_note_scroll)
+                dom_text = note.get("dom_text")
+                if not dom_text:
+                    continue
+                note_widget.add_line("User: %s" % note.get("create_by"))
+                note_widget.add_line("Time: %s" % note.get("time"))
+                dom_text = json.loads(dom_text)
+                for dom in dom_text[::-1]:
+                    dom_type = dom.get("type")
+                    if dom_type == "text":
+                        content = dom.get("content").strip()
+                        if not content:
+                            continue
+                        note_widget.add_line(content)
+                    elif dom_type == "at":
+                        title = dom.get("title").strip()
+                        note_widget.add_line(title)
+                    elif dom_type == "image":
+                        server_max_path = dom.get("max")
+                        path = download_image(server_max_path, CacheImgStratepy("TaskChoose"))
+                        pixmap = QPixmap(path)
+                        n = pixmap.scaledToHeight(config.G_note_image_height, Qt.SmoothTransformation)
+                        note_widget.add_image(n, path)
+
+                note_widget.setMinimumWidth(widget_note_scroll.width())
+                vbox_note.addWidget(note_widget)
+            self.scroll_node.setWidget(widget_note_scroll)
+
+    def change_version(self, index):
+        data = self.combo_version.itemData(index, Qt.UserRole)
+        if not data:
+            return
+        version = data.get("entity")
+        status = data.get("status")
+        description = data.get("description")
+        content = "version: v%s\nstatus: %s\n%s" % (version, status, description)
+        self.textEdit_version.setPlainText(content)
 
     def _hide_module_widget(self):
         if self.modules == "Asset":

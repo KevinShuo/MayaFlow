@@ -4,6 +4,7 @@ import os
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QWidget, QFrame, QVBoxLayout, QFormLayout, QLabel, QComboBox, QListWidget, QHBoxLayout, \
     QPushButton, QGroupBox, QScrollArea
+from ct_filebox_drag_in.add_timelog import QTextEdit
 
 
 class StartupUI(QWidget):
@@ -89,6 +90,12 @@ class StartupUI(QWidget):
         self.label_task_image.setHidden(True)
         hbox_group.addWidget(self.label_task_image, 1, Qt.AlignVCenter)
         # note
+        self.combo_version = QComboBox()
         self.scroll_node = QScrollArea()
+        vbox_right.addWidget(self.combo_version)
+        self.textEdit_version = QTextEdit()
+        self.textEdit_version.setReadOnly(True)
+        self.textEdit_version.setMaximumHeight(70)
+        vbox_right.addWidget(self.textEdit_version, 0)
         vbox_right.addWidget(self.scroll_node, 1)
         self.hbox_main.addWidget(frame_right)
