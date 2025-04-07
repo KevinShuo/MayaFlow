@@ -58,6 +58,7 @@ class StartupUI(QWidget):
         form_top.addRow(label_task, self.list_task)
         vbox_left.addWidget(frame_top)
         self.butn_submit = QPushButton("Submit")
+        self.butn_submit.setObjectName("submit")
         vbox_left.addWidget(self.butn_submit, 1)
         self.hbox_main.addWidget(frame_left)
         # right

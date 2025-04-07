@@ -39,5 +39,9 @@ QTextEdit{
     font-family: "Arial", serif;
     font-style: oblique;
     padding: 5px;
-    font-size: 13px;
+}
+
+QPushButton#submit{
+    height:70%;
+    font-family: "Arial", serif;
 }
