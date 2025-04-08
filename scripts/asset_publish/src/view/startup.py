@@ -216,7 +216,7 @@ class StartupView(StartupUI):
         if task_image_data:
             self.label_task_image.setHidden(False)
             min, max = json.loads(task_image_data)[0].get("min"), json.loads(task_image_data)[0].get("max")
-            max_local_path = download_image(max, CacheImgStratepy("TaskChoose"))
+            max_local_path = download_image(max, CacheImgStratepy("TaskChoose", self.task_name))
             self.label_task_image.set_path(max_local_path)
             pixmap = QPixmap(max_local_path)
             pixmap = pixmap.scaledToHeight(config.G_image_height, Qt.SmoothTransformation)
@@ -261,7 +261,8 @@ class StartupView(StartupUI):
                         note_widget.add_line(title)
                     elif dom_type == "image":
                         server_max_path = dom.get("max")
-                        path = download_image(server_max_path, CacheImgStratepy("TaskChoose"))
+                        path = download_image(server_max_path,
+                                              CacheImgStratepy("TaskChoose", "%s_note" % self.task_name))
                         pixmap = QPixmap(path)
                         n = pixmap.scaledToHeight(config.G_note_image_height, Qt.SmoothTransformation)
                         note_widget.add_image(n, path)
@@ -315,6 +316,10 @@ class StartupView(StartupUI):
     @property
     def seq(self):
         return self.combo_seq.currentText()
+
+    @property
+    def task_name(self):
+        return self.label_task_name.text()
 
     # def resizeEvent(self, event):
     #     print(event.size())

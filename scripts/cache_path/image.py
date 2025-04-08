@@ -6,9 +6,9 @@ from scripts.cache_path.abc import CachePathStrategyABC
 
 
 class CacheImgStratepy(CachePathStrategyABC):
-    def __init__(self, plugin_name):
+    def __init__(self, plugin_name, second_name):
         path = appdirs.user_cache_dir(appname=plugin_name)
-        self.image_path = os.path.join(path, 'image').replace('\\', '/')
+        self.image_path = os.path.join(path, second_name, 'image').replace('\\', '/')
         if not os.path.exists(self.image_path):
             os.makedirs(self.image_path)
 
