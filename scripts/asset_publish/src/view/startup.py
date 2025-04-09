@@ -36,6 +36,7 @@ class StartupView(StartupUI):
         self.combo_seq.currentTextChanged.connect(self.change_seq)
         self.list_task.itemClicked.connect(self.select_task)
         self.combo_version.currentIndexChanged.connect(self.change_version)
+        self.butn_submit.clicked.connect(self.submit)
 
     def build_ui(self):
         self.resize(*config.G_window_size)
@@ -241,7 +242,6 @@ class StartupView(StartupUI):
             widget_note_scroll = QWidget()
             vbox_note = QVBoxLayout(widget_note_scroll)
             for index, note in enumerate(sorted(note_data, key=lambda x: x.get("time"), reverse=True)):
-                # print(note)
                 note_widget = NoteWidget(widget_note_scroll)
                 dom_text = note.get("dom_text")
                 if not dom_text:
@@ -280,6 +280,9 @@ class StartupView(StartupUI):
         description = data.get("description")
         content = "version: v%s\nstatus: %s\n%s" % (version, status, description)
         self.textEdit_version.setPlainText(content)
+
+    def submit(self):
+        pass
 
     def _hide_module_widget(self):
         if self.modules == "Asset":

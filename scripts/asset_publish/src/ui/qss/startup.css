@@ -42,7 +42,7 @@ QTextEdit{
 }
 
 QPushButton#submit{
-    height:70%;
+    height:50%;
     font-family: "Arial", serif;
     background-color: #8B4513;
     color:#F7EEDD;
