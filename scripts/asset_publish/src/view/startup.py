@@ -14,6 +14,7 @@ from scripts.asset_publish.src.ui.startup import StartupUI
 from scripts.cache_path.image import CacheImgStratepy
 from .. import config
 from ..config.status_colors import StatusColor
+from ..submit.asset import AssetData
 from ..ui.note import NoteWidget
 from ..utils.download_img import download_image
 
@@ -193,7 +194,7 @@ class StartupView(StartupUI):
             pass
 
     def setup_asset(self, item_text, data):
-        task_id = data.get("id")
+        self.task_id = data.get("id")
         task_name = item_text.split("]")[-1]
         self.label_task_name.setText(task_name)
         # pipeline
@@ -224,7 +225,7 @@ class StartupView(StartupUI):
             self.label_task_image.setPixmap(pixmap)
         else:
             self.label_task_image.setHidden(True)
-        cgt_asset = CGTAssetTask(self.project_db, task_id, NormalUserStrategy())
+        cgt_asset = CGTAssetTask(self.project_db, self.task_id, NormalUserStrategy())
         # 显示版本信息
         version_data = cgt_asset.versions
         self.combo_version.clear()
@@ -282,7 +283,11 @@ class StartupView(StartupUI):
         self.textEdit_version.setPlainText(content)
 
     def submit(self):
-        pass
+        if self.modules == "Asset":
+            asset_name = self.list_task.currentItem().text().split("]")[-1]
+            task_name = self.list_task.currentItem().text().split("[")[-1].split("]")[0]
+            asset_data = AssetData(self.asset_type, asset_name, task_name, self.label_artist.text(), self.task_id)
+            print(asset_data)
 
     def _hide_module_widget(self):
         if self.modules == "Asset":
