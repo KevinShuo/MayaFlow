@@ -3,8 +3,7 @@ import os
 
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QWidget, QFrame, QVBoxLayout, QFormLayout, QLabel, QComboBox, QListWidget, QHBoxLayout, \
-    QPushButton, QGroupBox, QScrollArea
-from ct_filebox_drag_in.add_timelog import QTextEdit
+    QPushButton, QGroupBox, QScrollArea,QTextEdit
 
 from scripts.asset_publish.src.ui.note import ImageLabel
 
