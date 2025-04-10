@@ -2,15 +2,16 @@
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import *
 
-from m_maya.ui import MayaUI
+from m_maya_py2.src.ui import MayaUIPy2
 
 
 class CommonCheckPublishUI(QWidget):
     def __init__(self, parent=None):
-        super().__init__(parent)
+        super(CommonCheckPublishUI, self).__init__(parent)
 
     def setup_ui(self):
-        MayaUI.wrap_pyside(self)
+        maya_ui = MayaUIPy2()
+        maya_ui.wrap_pyside(self)
         hbox_main = QHBoxLayout(self)
         # left main
         splitter = QSplitter(Qt.Horizontal)
