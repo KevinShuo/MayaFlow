@@ -4,7 +4,7 @@ import importlib
 from typing import List
 
 from PySide2.QtGui import QColor, QFont
-from PySide2.QtWidgets import QApplication, QSizePolicy
+from PySide2.QtWidgets import QApplication, QMessageBox
 
 from check_and_publish.src import read_check_yaml
 from check_and_publish.src.config import G_size
@@ -29,16 +29,21 @@ class CheckView(check_ui.CheckUI):
 
     def run(self):
         self.master_data = get_maya_info_to_data()
-        cgt_asset = CGTAssetTask(self.master_data.project_database, self.master_data.task_id)
-        handle_yaml = read_check_yaml.HandleCheckYaml(self.master_data.project_database, self.master_data.module,
-                                                      self.master_data.pipeline, cgt_asset.asset_type)
-        check_datas = handle_yaml.get_check_data()
-        self.check_list: List[check_widget.CheckWidget] = []
-        for check_data in check_datas:
-            check = check_widget.CheckWidget(check_data)
-            check.setMinimumWidth(300)
-            self.vbox_check.addWidget(check)
-            self.check_list.append(check)
+        if self.master_data:
+            cgt_asset = CGTAssetTask(self.master_data.project_database, self.master_data.task_id)
+            handle_yaml = read_check_yaml.HandleCheckYaml(self.master_data.project_database, self.master_data.module,
+                                                          self.master_data.pipeline, cgt_asset.asset_type)
+            check_datas = handle_yaml.get_check_data()
+            self.check_list: List[check_widget.CheckWidget] = []
+            for check_data in check_datas:
+                check = check_widget.CheckWidget(check_data)
+                check.setMinimumWidth(300)
+                self.vbox_check.addWidget(check)
+                self.check_list.append(check)
+        else:
+            QMessageBox.critical(self, "请用taskChoose 绑定任务信息")
+            return
+
         self.scroll_area.setWidget(self.frame_check)
         self.butn_execute.clicked.connect(self.execute)
 
