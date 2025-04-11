@@ -14,7 +14,7 @@ from scripts.asset_publish.src.ui.startup import StartupUI
 from scripts.cache_path.image import CacheImgStratepy
 from .. import config
 from ..config.status_colors import StatusColor
-from ..submit.asset import AssetData
+from ..submit.asset import AssetData, AssetSubmit
 from ..ui.note import NoteWidget
 from ..utils.download_img import download_image
 
@@ -287,7 +287,8 @@ class StartupView(StartupUI):
             asset_name = self.list_task.currentItem().text().split("]")[-1]
             task_name = self.list_task.currentItem().text().split("[")[-1].split("]")[0]
             asset_data = AssetData(self.asset_type, asset_name, task_name, self.label_artist.text(), self.task_id)
-            print(asset_data)
+            self.asset_submit = AssetSubmit(self.project_db, asset_data)
+            self.asset_submit.submit()
 
     def _hide_module_widget(self):
         if self.modules == "Asset":

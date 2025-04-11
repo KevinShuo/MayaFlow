@@ -7,10 +7,3 @@ class CheckUI(CommonCheckPublishUI):
     def __init__(self, parent=None):
         super(CheckUI, self).__init__(parent)
         self.setup_ui()
-        self.add_ui()
-
-    def add_ui(self):
-        pass
-        # self.check_and_fix = QCheckBox("Check and Fix")
-        # self.hbox_left_below.addWidget(self.check_and_fix)
-        # self.check_and_fix.setChecked(True)

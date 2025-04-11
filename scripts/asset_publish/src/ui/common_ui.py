@@ -9,9 +9,10 @@ class CommonCheckPublishUI(QWidget):
     def __init__(self, parent=None):
         super(CommonCheckPublishUI, self).__init__(parent)
 
-    def setup_ui(self):
-        maya_ui = MayaUIPy2()
-        maya_ui.wrap_pyside(self)
+    def setup_ui(self, is_maya=False):
+        if is_maya:
+            maya_ui = MayaUIPy2()
+            maya_ui.wrap_pyside(self)
         hbox_main = QHBoxLayout(self)
         # left main
         splitter = QSplitter(Qt.Horizontal)

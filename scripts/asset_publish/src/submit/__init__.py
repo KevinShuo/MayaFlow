@@ -8,3 +8,4 @@ class SubmitDataABC(object):
     @abstractmethod
     def submit(self):
         pass
+

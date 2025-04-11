@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
-import appdirs
+import os
 
+import appdirs
 from scripts.cache_path.abc import CachePathStrategyABC
 
 
-class CacheSubmitTask(CachePathStrategyABC):
-    def __init__(self, plugin_name, task_name):
+class CacheSubmitTaskStrategy(CachePathStrategyABC):
+    def __init__(self, plugin_name, asset_name):
         path = appdirs.user_data_dir(appname=plugin_name)
+        self.full_name = os.path.join(path, asset_name)
+
+    def get_path(self):
+        return self.full_name
