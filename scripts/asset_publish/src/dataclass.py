@@ -14,6 +14,17 @@ class CheckData(object):
         self.description = description
         self.module = module
 
+    def __repr__(self):
+        return ("<CheckData file='{file}' show_name='{name}' show={show} allow_skip={skip} "
+                "allow_fix={fix} module='{module}'>").format(
+            file=self.file_name,
+            name=self.show_name,
+            show=self.show,
+            skip=self.allow_skip,
+            fix=self.allow_fix,
+            module=self.module
+        )
+
     def __hash__(self):
         return hash((self.file_name, self.show, self.allow_skip, self.description))
 

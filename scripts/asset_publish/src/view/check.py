@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from m_cgt_py2.src.asset.task import CGTAssetTask
 from m_cgt_py2.src.login import NormalUserStrategy
+from scripts.asset_publish.src import read_check_yaml
 from scripts.asset_publish.src.ui import check_ui
 
 
@@ -13,16 +14,18 @@ class CheckView(check_ui.CheckUI):
         self.setWindowTitle(submit_data.get("window_name"))
         self.project_db = submit_data.get("project_db")
         self.task_id = submit_data.get("task_id")
-        cgt_asset = CGTAssetTask(self.project_db,self.task_id, NormalUserStrategy())
-        # handle_yaml = read_check_yaml.HandleCheckYaml(self.master_data.project_database, self.master_data.module,
-        #                                               self.master_data.pipeline, cgt_asset.asset_type)
-        # check_datas = handle_yaml.get_check_data()
-        # self.check_list = []
-        # for check_data in check_datas:
-        #     check = check_widget.CheckWidget(check_data)
-        #     check.setMinimumWidth(300)
-        #     self.vbox_check.addWidget(check)
-        #     self.check_list.append(check)
+        pipeline = submit_data.get("pipeline")
+        asset_type = submit_data.get("asset_type")
+        cgt_asset = CGTAssetTask(self.project_db, self.task_id, NormalUserStrategy())
+        handle_yaml = read_check_yaml.HandleCheckYaml(self.project_db, "asset",
+                                                      pipeline, asset_type)
+        check_datas = handle_yaml.get_check_data()
+        self.check_list = []
+        for check_data in check_datas:
+            check = check_widget.CheckWidget(check_data)
+            check.setMinimumWidth(300)
+            self.vbox_check.addWidget(check)
+            self.check_list.append(check)
         #
         # self.scroll_area.setWidget(self.frame_check)
         # self.butn_execute.clicked.connect(self.execute)

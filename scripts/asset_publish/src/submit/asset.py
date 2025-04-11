@@ -9,19 +9,22 @@ from scripts.cache_path.task import CacheSubmitTaskStrategy
 
 
 class AssetData(object):
-    def __init__(self, asset_type, asset_name, task_name, artist, task_id):
+    def __init__(self, asset_type, asset_name, task_name, artist, pipeline, task_id):
         self.asset_type = asset_type
         self.asset_name = asset_name
         self.task_name = task_name
         self.artist = artist
+        self.pipeline = pipeline
         self.task_id = task_id
 
     def __repr__(self):
-        return "AssetData<asset_type={}, asset_name={}, task_name={}, artist={}, task_id={}>".format(self.asset_type,
-                                                                                                     self.asset_name,
-                                                                                                     self.task_name,
-                                                                                                     self.artist,
-                                                                                                     self.task_id)
+        return "AssetData<asset_type={}, asset_name={}, task_name={}, artist={}, pipeline={},task_id={}>".format(
+            self.asset_type,
+            self.asset_name,
+            self.task_name,
+            self.artist,
+            self.pipeline,
+            self.task_id)
 
     def to_dict(self):
         return {
@@ -29,6 +32,7 @@ class AssetData(object):
             'asset_name': self.asset_name,
             'task_name': self.task_name,
             'artist': self.artist,
+            "pipeline": self.pipeline,
             'task_id': self.task_id,
         }
 

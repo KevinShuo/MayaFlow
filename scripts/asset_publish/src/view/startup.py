@@ -286,7 +286,8 @@ class StartupView(StartupUI):
         if self.modules == "Asset":
             asset_name = self.list_task.currentItem().text().split("]")[-1]
             task_name = self.list_task.currentItem().text().split("[")[-1].split("]")[0]
-            asset_data = AssetData(self.asset_type, asset_name, task_name, self.label_artist.text(), self.task_id)
+            asset_data = AssetData(self.asset_type, asset_name, task_name, self.label_artist.text(), self.pipeline,
+                                   self.task_id)
             self.asset_submit = AssetSubmit(self.project_db, asset_data)
             self.asset_submit.submit()
 

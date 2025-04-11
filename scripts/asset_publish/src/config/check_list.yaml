@@ -1,0 +1,16 @@
+
+proj_xn_tbp:
+  asset:
+    Char:
+      Surfacing:
+        - file_name: check_hierarchy
+          show_name: 检查Maya大纲层级
+          order: 0
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查Maya层级
+    Prop:
+      parent: "{proj_temp_test}{asset}{Char}"
+    Set:
+      parent: "{proj_temp_test}{asset}{Char}"

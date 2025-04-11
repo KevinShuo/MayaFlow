@@ -4,7 +4,9 @@ import os
 import re
 
 import yaml
+
 from scripts.asset_publish.src import dataclass
+from scripts.asset_publish.src.dataclass import PublishData
 
 
 class HandleCheckYaml:
@@ -16,19 +18,17 @@ class HandleCheckYaml:
         self.yaml_data = self.get_check_list(project_db, mod_type, pipeline, asset_type)
 
     def get_check_data(self):
-        checks_data = []
         sorted_list = sorted(self.yaml_data, key=lambda x: x["order"])
         for item in sorted_list:
             module = importlib.import_module(
-                "asset_publish.src.checks.{self.pipeline}.{item.get('file_name')}")
-            checks_data.append(dataclass.CheckData(item.get("file_name"),
-                                                   item.get("show_name"),
-                                                   True if item.get("show") == "True" else False,
-                                                   True if item.get("allow_skip") == "True" else False,
-                                                   True if item.get("allow_fix") == "True" else False,
-                                                   item.get("description"),
-                                                   module))
-        return checks_data
+                "asset_publish.src.checks.{}.{}".format(self.pipeline, item.get('file_name')))
+            yield dataclass.CheckData(item.get("file_name"),
+                                      item.get("show_name"),
+                                      True if item.get("show") == "True" else False,
+                                      True if item.get("allow_skip") == "True" else False,
+                                      True if item.get("allow_fix") == "True" else False,
+                                      item.get("description"),
+                                      module)
 
     def get_check_list(self, project_db, mod, pipeline, asset_type=None):
         """
@@ -66,7 +66,7 @@ class HandleCheckYaml:
 
 
 class HandlePublishYaml:
-    def __init__(self, project_db: str, process_type: str, pipeline_type: str):
+    def __init__(self, project_db, process_type, pipeline_type):
         self.project_db = project_db
         self.process_type = process_type
         self.pipeline_type = pipeline_type
@@ -77,26 +77,25 @@ class HandlePublishYaml:
         sorted_list = sorted(self.publish_list, key=lambda x: x["order"])
         for item in sorted_list:
             module = importlib.import_module(
-                f"check_and_publish.src.publish.{item.get('name')}")
-            importlib.reload(module)
+                "asset_publish.src.publish.{item.get('name')}")
             publish_datas.append(
                 PublishData(file_name=item.get("name"), show_name=item.get("show_name"), order=item.get("order"),
                             module=module))
         return publish_datas
 
-    def get_publish_list(self, project_db: str, process_type: str, pipeline_type: str):
+    def get_publish_list(self, project_db, process_type, pipeline_type):
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(os.path.join(dir_path, r"config/publish_list.yaml"), "r", encoding="utf-8") as f:
+        with open(os.path.join(dir_path, r"config/publish_list.yaml"), "r") as f:
             data = yaml.safe_load(f)
-        project_data: dict = data.get(project_db)
+        project_data = data.get(project_db)
         if not project_data:
-            raise AttributeError(f"Has not {project_db}")
-        process_data: dict = project_data.get(process_type)
+            raise AttributeError("Has not {}".format(project_db))
+        process_data = project_data.get(process_type)
         if not process_data:
-            raise AttributeError(f"Has not {process_type} in {project_db}")
-        pipeline_data: dict = process_data.get(pipeline_type)
+            raise AttributeError("Has not {} in {}".format(process_type, project_db))
+        pipeline_data = process_data.get(pipeline_type)
         if not pipeline_data:
-            raise AttributeError(f"Has not {pipeline_type} in {project_db} - {process_type}")
+            raise AttributeError("Has not {} in {} - {}".format(pipeline_type, project_db, process_type))
         if "parent" in pipeline_data:
             parent_data = pipeline_data.get("parent")
             parent_db = re.search(r"\{(.*?)\}", parent_data).group(1)
