@@ -1,20 +1,22 @@
 # -*- coding: utf-8 -*-
 import os
-from enum import Enum
 
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
+from enum import Enum
+
 
 class CheckData:
-    file_name: str
-    show_name: str
-    show: bool
-    allow_skip: bool
-    allow_fix: bool
-    description: str
-    module: str
+    def __init__(self, file_name, show_name, show, allow_skip, allow_fix, description, module):
+        self.file_name = file_name
+        self.show_name = show_name
+        self.show = show
+        self.allow_skip = allow_skip
+        self.allow_fix = allow_fix
+        self.description = description
+        self.module = module
 
     def __hash__(self):
         return hash((self.file_name, self.show, self.allow_skip, self.description))
@@ -37,8 +39,8 @@ class CheckWidget(QFrame):
     double_clicked = Signal()
     clicked = Signal()
 
-    def __init__(self, check_data: CheckData):
-        super().__init__()
+    def __init__(self, check_data, parent=None):
+        super(CheckWidget, self).__init__(parent)
 
         # 从 CheckData 中提取数据
         self.name = check_data.show_name  # 显示名称
@@ -50,8 +52,8 @@ class CheckWidget(QFrame):
         self.setupUI()
         self.__style__()
 
-    def __style__(self, style_file: str = 'check_widget_common'):
-        with open(os.path.join(os.path.dirname(__file__), f"qss/{style_file}.qss"), "r+") as qss_file:
+    def __style__(self, style_file = 'check_widget_common'):
+        with open(os.path.join(os.path.dirname(__file__), "qss/{}.qss".format(style_file)), "r+") as qss_file:
             self.setStyleSheet(qss_file.read())
 
     def setupUI(self):
@@ -68,7 +70,7 @@ class CheckWidget(QFrame):
         # self.setContextMenuPolicy(Qt.CustomContextMenu)
         # self.customContextMenuRequested.connect(self.add_menu)
 
-    def start_check(self, execute_fix: bool = False):
+    def start_check(self, execute_fix = False):
         ret = self.module.start_check()
         if isinstance(ret, bool):
             if ret:
@@ -117,8 +119,6 @@ class CheckWidget(QFrame):
             self.common()
 
     def mouseDoubleClickEvent(self, event):
-        # if self.Check_Widget.value == "Check" and self.allow_fix:
-        #     if hasattr(self.module, "fix"):
         fix_result = self.module.fix()
         if fix_result:
             self.approve()
@@ -128,5 +128,5 @@ class CheckWidget(QFrame):
         return self._status
 
     @status.setter
-    def status(self, value: TaskStatus):
+    def status(self, value):
         self._status = value

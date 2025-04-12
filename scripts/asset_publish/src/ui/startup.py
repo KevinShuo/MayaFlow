@@ -3,7 +3,7 @@ import os
 
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QWidget, QFrame, QVBoxLayout, QFormLayout, QLabel, QComboBox, QListWidget, QHBoxLayout, \
-    QPushButton, QGroupBox, QScrollArea,QTextEdit
+    QPushButton, QGroupBox, QScrollArea, QTextEdit, QSizePolicy
 
 from scripts.asset_publish.src.ui.note import ImageLabel
 
@@ -24,38 +24,45 @@ class StartupUI(QWidget):
         # Top
         frame_top = QFrame()
         form_top = QFormLayout(frame_top)
+        # project
         label_project_name = QLabel("Project:")
         self.combo_project_name = QComboBox()
+        self.combo_project_name.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         form_top.addRow(label_project_name, self.combo_project_name)
         # module
         label_module = QLabel("Module:")
         self.combo_module = QComboBox()
+        self.combo_module.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         self.combo_module.addItems(["Asset", "Shot"])
         form_top.addRow(label_module, self.combo_module)
         # pipeline
         label_pipeline = QLabel("Pipeline:")
         self.combo_pipeline = QComboBox()
+        self.combo_pipeline.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         form_top.addRow(label_pipeline, self.combo_pipeline)
         # asset_type
         self.label_asset_type = QLabel("Asset Type:")
         self.combo_asset_type = QComboBox()
+        self.combo_asset_type.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         form_top.addRow(self.label_asset_type, self.combo_asset_type)
         # eps
         self.label_eps = QLabel("Episodes:")
         self.combo_eps = QComboBox()
+        self.combo_eps.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         form_top.addRow(self.label_eps, self.combo_eps)
         # sequence
         self.label_seq = QLabel("Sequence:")
         self.combo_seq = QComboBox()
+        self.combo_seq.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         form_top.addRow(self.label_seq, self.combo_seq)
         # task
         label_tip = QLabel(u"格式: [任务名称] 资产名称")
         label_tip.setObjectName("tip_format")
         form_top.addRow("", label_tip)
-        label_task = QLabel("Task:")
-        self.list_task = QListWidget()
-        form_top.addRow(label_task, self.list_task)
         vbox_left.addWidget(frame_top)
+        self.list_task = QListWidget()
+        self.list_task.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        vbox_left.addWidget(self.list_task, 1)
         self.butn_submit = QPushButton("Submit")
         self.butn_submit.setObjectName("submit")
         vbox_left.addWidget(self.butn_submit, 1)

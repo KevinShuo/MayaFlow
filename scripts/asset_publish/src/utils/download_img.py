@@ -4,11 +4,9 @@ import os
 
 from m_cgt_py2.image import CGTImage
 from m_cgt_py2.src.login import NormalUserStrategy
-from scripts.cache_path.abc import CachePathStrategyABC
 
 
 def download_image(server_path, local_strategy):
-    # type: (str,CachePathStrategyABC) -> str
     file_name = os.path.split(server_path)[1]
     server_md5 = file_name.split(".")[0].split("_")[0]
     cgt_image = CGTImage(NormalUserStrategy())

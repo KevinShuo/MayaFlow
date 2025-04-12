@@ -2,7 +2,7 @@
 import os
 
 import appdirs
-from scripts.cache_path.abc import CachePathStrategyABC
+from cache_path import CachePathStrategyABC
 
 
 class CacheSubmitTaskStrategy(CachePathStrategyABC):

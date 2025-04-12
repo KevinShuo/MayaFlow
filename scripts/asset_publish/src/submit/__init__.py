@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-from abc import ABCMeta, abstractmethod
-
+import abc
 
 class SubmitDataABC(object):
-    __metaclass__ = ABCMeta
+    __metaclass__ = abc.ABCMeta
 
-    @abstractmethod
+    @abc.abstractmethod
     def submit(self):
         pass
 
