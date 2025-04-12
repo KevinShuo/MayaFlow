@@ -8,6 +8,7 @@ from m_maya_py2.src.ui import MayaUIPy2
 class CommonCheckPublishUI(QWidget):
     def __init__(self, parent=None):
         super(CommonCheckPublishUI, self).__init__(parent)
+        self.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
 
     def setup_ui(self, is_maya=False):
         if is_maya:

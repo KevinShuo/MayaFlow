@@ -11,5 +11,4 @@ if __name__ == '__main__':
     app.setAttribute(Qt.AA_UseHighDpiPixmaps)
     app.setAttribute(Qt.AA_EnableHighDpiScaling)
     win = StartupView()
-    win.show()
     # sys.exit(app.exec_())

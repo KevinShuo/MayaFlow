@@ -40,21 +40,23 @@ class CheckView(check_ui.CheckUI):
         self.text_log.clear()
         rt = []
         for check in self.check_list:
-            ret = check.start_check(self.check_and_fix.isChecked())
+            ret = check.start_check()
+            print(ret)
             if ret == True:
-                self.write_check_log(LogLevel.Success, check.name, "{} 成功".format(check.name))
+                self.write_check_log(LogLevel.Success, check.name, u"{} Success".format(check.name))
                 rt.append(True)
             elif isinstance(ret, str):
-                self.write_check_log(LogLevel.ERROR, check.name, ret)
+                self.write_check_log(LogLevel.ERROR, u"{}".format(check.name), ret)
                 rt.append(False)
             elif ret == False:
-                self.write_check_log(LogLevel.ERROR, check.name, "{} 失败".format(check.name))
+                self.write_check_log(LogLevel.ERROR, check.name, u"{} Error".format(check.name))
                 rt.append(False)
             QApplication.processEvents()
         if False not in rt:
-            maya_ui = MayaUI()
-            maya_ui.message_box("提示", "检查通过，正在保存文件", MessageType.information)
-            maya_file.save(SaveType.ma)
+            print("Success")
+            # maya_ui = MayaUI()
+            # maya_ui.message_box("提示", "检查通过，正在保存文件", MessageType.information)
+            # maya_file.save(SaveType.ma)
 
     def write_check_log(self, log_level, title, content):
         # 默认白色
@@ -70,12 +72,11 @@ class CheckView(check_ui.CheckUI):
         self.text_log.setTextColor(QColor(log_colors.get(log_level, "#FFFFFF")))
         self.text_log.append(self.write_log(log_level, content, True))
 
-    def write_log(self, log_level, content, take_time = False):
+    def write_log(self, log_level, content, take_time=False):
         time_str = None
         if take_time:
             time_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-        return "{} [{}]: {}".format(time_str, log_level.name, content) if time_str else "[{}]: {}".format(
+        return u"{} [{}]: {}".format(time_str, log_level.name, content) if time_str else u"[{}]: {}".format(
             log_level.name, content)
 
     # def resizeEvent(self, event):

@@ -4,7 +4,6 @@ import os
 import re
 
 import yaml
-
 from scripts.asset_publish.src import dataclass
 from scripts.asset_publish.src.dataclass import PublishData
 
@@ -22,6 +21,11 @@ class HandleCheckYaml:
         for item in sorted_list:
             module = importlib.import_module(
                 "asset_publish.src.checks.{}.{}".format(self.pipeline, item.get('file_name')))
+            try:
+                from imp import reload
+                reload(module)
+            except:
+                importlib.reload(module)
             yield dataclass.CheckData(item.get("file_name"),
                                       item.get("show_name"),
                                       True if item.get("show") == "True" else False,

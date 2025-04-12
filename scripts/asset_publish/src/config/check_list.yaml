@@ -1,16 +1,49 @@
-
 proj_xn_tbp:
   asset:
     Char:
       Surfacing:
         - file_name: more_than_face
-          show_name: ����4�ߵ���
+          show_name: 超过4边的面
           order: 0
           show: true
           allow_skip: false
           allow_fix: true
-          description: ��鳬��4�ߵ���
-        - file_name: 
+          description: 检查超过4边的面
+        - file_name: exists_name
+          show_name: 检查是否有重复名称层级
+          order: 1
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查是否有重复名称层级
+        - file_name: overlap_mesh
+          show_name: 检查是否有交集模型
+          order: 2
+          show: true
+          allow_skip: false
+          allow_fix: true
+          description: 检查是否有交集模型
+        - file_name: exists_namespace
+          show_name: 检查是否有命名空间
+          order: 3
+          show: True
+          allow_skip: false
+          allow_fix: true
+          description: 检查是否有命名空间
+        - file_name: top_hierarchy
+          show_name: 检查顶层存在多个组或模型
+          order: 4
+          show: True
+          allow_skip: false
+          allow_fix: true
+          description: 检查顶层存在多个组或模型
+        - file_name: empty_group
+          show_name: 检查空组
+          order: 5
+          show: True
+          allow_skip: false
+          allow_fix: true
+          description: 检查空组
     Prop:
       parent: "{proj_temp_test}{asset}{Char}"
     Set:

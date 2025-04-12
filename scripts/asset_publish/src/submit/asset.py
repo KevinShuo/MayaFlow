@@ -45,7 +45,7 @@ class AssetSubmit(PublicData, SubmitDataABC):
         if not os.path.exists(self.path):
             os.makedirs(self.path)
         self.full_path = os.path.join(self.path,
-                                      "{}_{}.json".format(self.asset_data.task_name, self.asset_data.artist)).replace(
+                                      "{}.json".format(self.asset_data.task_name)).replace(
             "\\", "/")
 
     def submit(self, parent=None):

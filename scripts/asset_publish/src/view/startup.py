@@ -4,6 +4,7 @@ import json
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QPixmap
 from PySide2.QtWidgets import QListWidgetItem, QVBoxLayout, QWidget
+from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 
 from m_cgt_py2.src.asset.task import CGTAssetTask
 from m_cgt_py2.src.asset.task_project import CGTAssetTaskProject
@@ -19,7 +20,7 @@ from ..ui.note import NoteWidget
 from ..utils.download_img import download_image
 
 
-class StartupView(StartupUI):
+class StartupView(MayaQWidgetDockableMixin, StartupUI):
     def __init__(self, parent=None):
         super(StartupView, self).__init__(parent)
         self.project_db = None
@@ -45,6 +46,7 @@ class StartupView(StartupUI):
         self.init_projects()
         self._hide_module_widget()
         self.change_project(self.combo_project_name.currentText())
+        self.show(dockable=True)
 
     def init_projects(self):
         cgt_project = CGTProjectInfo(NormalUserStrategy())

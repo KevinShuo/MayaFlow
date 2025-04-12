@@ -5,12 +5,15 @@ from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QWidget, QFrame, QVBoxLayout, QFormLayout, QLabel, QComboBox, QListWidget, QHBoxLayout, \
     QPushButton, QGroupBox, QScrollArea, QTextEdit, QSizePolicy
 
+from asset_publish.src.config import G_window_title, G_version
 from scripts.asset_publish.src.ui.note import ImageLabel
 
 
 class StartupUI(QWidget):
     def __init__(self, parent=None):
         super(StartupUI, self).__init__(parent)
+        self.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.setWindowTitle("{} v{}".format(G_window_title, G_version))
 
     def setup_ui(self):
         with open(os.path.join(os.path.dirname(__file__), 'qss', 'startup.css'), 'r') as f:

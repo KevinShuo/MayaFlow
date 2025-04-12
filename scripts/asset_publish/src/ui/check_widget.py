@@ -70,31 +70,19 @@ class CheckWidget(QFrame):
         # self.setContextMenuPolicy(Qt.CustomContextMenu)
         # self.customContextMenuRequested.connect(self.add_menu)
 
-    def start_check(self, execute_fix = False):
+    def start_check(self):
         ret = self.module.start_check()
         if isinstance(ret, bool):
             if ret:
                 self.approve()
                 return True
             else:
-                if execute_fix:
-                    if hasattr(self.module, "fix"):
-                        self.module.fix()
-                        self.start_check(False)
                 self.failed()
                 return False
         elif isinstance(ret, str):
-            if execute_fix:
-                if hasattr(self.module, "fix"):
-                    self.module.fix()
-                    self.start_check(False)
             self.failed()
             return str(ret)
         elif isinstance(ret, list):
-            if execute_fix:
-                if hasattr(self.module, "fix"):
-                    self.module.fix()
-                    self.start_check(False)
             self.failed()
             return list
 
