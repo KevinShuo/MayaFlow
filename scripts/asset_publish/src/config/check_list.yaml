@@ -44,6 +44,20 @@ proj_xn_tbp:
           allow_skip: false
           allow_fix: true
           description: 检查空组
+        - file_name: render_layer
+          show_name: 检查渲染分层
+          order: 6
+          show: True
+          allow_skip: false
+          allow_fix: true
+          description: 检查渲染分层
+        - file_name: display_layer
+          show_name: 检查DisplayLayer分层
+          order: 7
+          show: True
+          allow_skip: false
+          allow_fix: true
+          description: 检查DisplayLayer分层
     Prop:
       parent: "{proj_temp_test}{asset}{Char}"
     Set:
