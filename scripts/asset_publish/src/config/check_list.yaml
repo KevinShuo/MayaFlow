@@ -58,6 +58,48 @@ proj_xn_tbp:
           allow_skip: false
           allow_fix: true
           description: 检查DisplayLayer分层
+        - file_name: extra_camera
+          show_name: 检查多余相机
+          order: 8
+          show: True
+          allow_skip: false
+          allow_fix: true
+          description: 检查多余相机
+        - file_name: extra_light
+          show_name: 检查多余灯光
+          order: 9
+          show: True
+          allow_skip: false
+          allow_fix: true
+          description: 检查多余灯光
+        - file_name: extra_aov
+          show_name: 检查多余AOV
+          order: 10
+          show: True
+          allow_skip: false
+          allow_fix: true
+          description: 检查多余AOV
+        - file_name: history
+          show_name: 检查未删除历史的对象
+          order: 11
+          show: True
+          allow_skip: false
+          allow_fix: true
+          description: 检查未删除历史的对象
+        - file_name: unfreeze_position
+          show_name: 检查未冻结对象
+          order: 12
+          show: True
+          allow_skip: false
+          allow_fix: true
+          description: 检查未冻结对象
+        - file_name: uvsets
+          show_name: 检查UVSets命名
+          order: 13
+          show: True
+          allow_skip: false
+          allow_fix: true
+          description: 检查UVSets命名
     Prop:
       parent: "{proj_temp_test}{asset}{Char}"
     Set:

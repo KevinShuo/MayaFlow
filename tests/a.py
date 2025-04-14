@@ -1,15 +1,20 @@
-# -*- coding: utf-8 -*-
-import os
-import re
-
-a = r"D:\longhaisi"
-start_path =
-for root, dirs, files in os.walk(a):
-    for filename in files:
-        full_path = os.path.join(root, filename).replace('\\', '/')
-        if filename.endswith('.ass'):
-            with open(full_path, 'r', encoding='utf-8') as f:
-                data = f.read()
-                for chunk in re.findall(r"filename \"(.*?)\"", data, re.DOTALL):
-                    print(chunk)
-            break
+var = ['C:\\Program Files\\Autodesk\\Maya2018\\bin', 'C:\\dev\\maya\\MayaFlow\\scripts',
+       'C:\\dev\\maya\\MayaFlow\\libs\\py2\\site-packages', 'C:\\CgTeamWork_v7\\bin\\base',
+       'C:\\dev\\maya\\MayaFlow\\bat',
+       'C:\\Program Files\\Autodesk\\Maya2018\\plug-ins\\ATF\\scripts',
+       'C:\\Program Files\\Common Files\\Autodesk\\ApplicationPlugins\\bifrost\\Contents\\scripts',
+       'C:\\Program Files\\Autodesk\\Maya2018\\plug-ins\\MASH\\scripts',
+       'C:\\Program Files\\Autodesk\\Maya2018\\plug-ins\\fbx\\scripts',
+       'C:\\Program Files\\Autodesk\\Maya2018\\plug-ins\\camd\\scripts',
+       'C:\\Program Files\\Autodesk\\Maya2018\\plug-ins\\substance\\scripts',
+       'C:\\Program Files\\Autodesk\\Maya2018\\plug-ins\\xgen\\scripts',
+       'C:\\Program Files\\Autodesk\\Maya2018\\bin\\python27.zip',
+       'C:\\Program Files\\Autodesk\\Maya2018\\Python\\DLLs',
+       'C:\\Program Files\\Autodesk\\Maya2018\\Python\\lib',
+       'C:\\Program Files\\Autodesk\\Maya2018\\Python\\lib\\plat-win',
+       'C:\\Program Files\\Autodesk\\Maya2018\\Python\\lib\\lib-tk', 'C:\\Program Files\\Autodesk\\Maya2018\\bin',
+       'C:\\Program Files\\Autodesk\\Maya2018\\Python',
+       'C:\\Program Files\\Autodesk\\Maya2018\\Python\\lib\\site-packages',
+       'C:\\Program Files\\Autodesk\\Maya2018\\bin\\python27.zip\\lib-tk',
+       u'C:/Users/wangshuo/Documents/maya/2018/prefs/scripts', u'C:/Users/wangshuo/Documents/maya/2018/scripts',
+       u'C:/Users/wangshuo/Documents/maya/scripts']
