@@ -28,9 +28,9 @@ class HandleCheckYaml:
                 importlib.reload(module)
             yield dataclass.CheckData(item.get("file_name"),
                                       item.get("show_name"),
-                                      True if item.get("show") == "True" else False,
-                                      True if item.get("allow_skip") == "True" else False,
-                                      True if item.get("allow_fix") == "True" else False,
+                                      True if str(item.get("show")).lower() == "true" else False,
+                                      True if str(item.get("allow_skip")).lower() == "true" else False,
+                                      True if str(item.get("allow_fix")).lower() == "true" else False,
                                       item.get("description"),
                                       module)
 

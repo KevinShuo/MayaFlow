@@ -11,8 +11,8 @@ from m_cgt_py2.src.asset.task_project import CGTAssetTaskProject
 from m_cgt_py2.src.login import NormalUserStrategy
 from m_cgt_py2.src.project.info import CGTProjectInfo
 from m_cgt_py2.src.shot.task_project import CGTShotTaskProject
-from scripts.asset_publish.src.ui.startup import StartupUI
-from scripts.cache_path.image import CacheImgStratepy
+from asset_publish.src.ui.startup import StartupUI
+from cache_path.image import CacheImgStratepy
 from .. import config
 from ..config.status_colors import StatusColor
 from ..submit.asset import AssetData, AssetSubmit

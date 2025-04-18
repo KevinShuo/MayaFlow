@@ -2,100 +2,107 @@ proj_xn_tbp:
   asset:
     Char:
       Surfacing:
-        - file_name: more_than_face
-          show_name: 超过4边的面
+        - file_name: empty_maya_name
+          show_name: 检查Maya是否已保存
           order: 0
           show: true
-          allow_skip: false
+          allow_skip: true
+          allow_fix: true
+          description: 检查超过4边的面
+        - file_name: more_than_face
+          show_name: 超过4边的面
+          order: 1
+          show: true
+          allow_skip: true
           allow_fix: true
           description: 检查超过4边的面
         - file_name: exists_name
           show_name: 检查是否有重复名称层级
-          order: 1
+          order: 2
           show: true
           allow_skip: false
           allow_fix: true
           description: 检查是否有重复名称层级
         - file_name: overlap_mesh
           show_name: 检查是否有交集模型
-          order: 2
+          order: 3
           show: true
           allow_skip: false
           allow_fix: true
           description: 检查是否有交集模型
         - file_name: exists_namespace
           show_name: 检查是否有命名空间
-          order: 3
+          order: 4
           show: True
           allow_skip: false
           allow_fix: true
           description: 检查是否有命名空间
         - file_name: top_hierarchy
           show_name: 检查顶层存在多个组或模型
-          order: 4
+          order: 5
           show: True
           allow_skip: false
           allow_fix: true
           description: 检查顶层存在多个组或模型
         - file_name: empty_group
           show_name: 检查空组
-          order: 5
+          order: 6
           show: True
           allow_skip: false
           allow_fix: true
           description: 检查空组
         - file_name: render_layer
           show_name: 检查渲染分层
-          order: 6
+          order: 7
           show: True
-          allow_skip: false
+          allow_skip: true
           allow_fix: true
           description: 检查渲染分层
         - file_name: display_layer
           show_name: 检查DisplayLayer分层
-          order: 7
+          order: 8
           show: True
           allow_skip: false
           allow_fix: true
           description: 检查DisplayLayer分层
         - file_name: extra_camera
           show_name: 检查多余相机
-          order: 8
+          order: 9
           show: True
           allow_skip: false
           allow_fix: true
           description: 检查多余相机
         - file_name: extra_light
           show_name: 检查多余灯光
-          order: 9
+          order: 10
           show: True
           allow_skip: false
           allow_fix: true
           description: 检查多余灯光
         - file_name: extra_aov
           show_name: 检查多余AOV
-          order: 10
+          order: 11
           show: True
           allow_skip: false
           allow_fix: true
           description: 检查多余AOV
         - file_name: history
           show_name: 检查未删除历史的对象
-          order: 11
+          order: 12
           show: True
           allow_skip: false
           allow_fix: true
           description: 检查未删除历史的对象
         - file_name: unfreeze_position
           show_name: 检查未冻结对象
-          order: 12
+          order: 13
           show: True
           allow_skip: false
           allow_fix: true
           description: 检查未冻结对象
         - file_name: uvsets
           show_name: 检查UVSets命名
-          order: 13
+          order: 14
           show: True
           allow_skip: false
           allow_fix: true

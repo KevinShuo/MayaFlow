@@ -6,7 +6,7 @@ from PySide2.QtWidgets import QWidget, QFrame, QVBoxLayout, QFormLayout, QLabel,
     QPushButton, QGroupBox, QScrollArea, QTextEdit, QSizePolicy
 
 from asset_publish.src.config import G_window_title, G_version
-from scripts.asset_publish.src.ui.note import ImageLabel
+from asset_publish.src.ui.note import ImageLabel
 
 
 class StartupUI(QWidget):

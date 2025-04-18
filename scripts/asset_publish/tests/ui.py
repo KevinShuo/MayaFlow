@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-import sys
 
-sys.path.append(r"C:\dev\maya\MayaFlow\scripts")
-from PySide2.QtWidgets import QApplication
 from PySide2.QtCore import Qt
+from PySide2.QtWidgets import QApplication
 
 from scripts.asset_publish.src.view.startup import StartupView
 

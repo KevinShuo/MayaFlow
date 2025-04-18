@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 import datetime
+from imp import reload
 
 from PySide2.QtGui import QFont, QColor
-from PySide2.QtWidgets import QApplication
+from PySide2.QtWidgets import QApplication, QMessageBox
 
+from asset_publish.src import read_check_yaml
 from asset_publish.src.dataclass import LogLevel
+from asset_publish.src.ui import check_ui
 from asset_publish.src.ui import check_widget
+from asset_publish.src.view.publish import PublishView
 from m_cgt_py2.src.asset.task import CGTAssetTask
 from m_cgt_py2.src.login import NormalUserStrategy
-from scripts.asset_publish.src import read_check_yaml
-from scripts.asset_publish.src.ui import check_ui
+from m_maya_py2.src.file import MayaFileOperatorPy2, SaveType
+
+reload(check_widget)
 
 
 class CheckView(check_ui.CheckUI):
@@ -18,6 +23,7 @@ class CheckView(check_ui.CheckUI):
         self.resize(1094, 639)
 
     def run(self, submit_data):
+        self.submit_data = submit_data
         self.setWindowTitle(submit_data.get("window_name"))
         self.project_db = submit_data.get("project_db")
         self.task_id = submit_data.get("task_id")
@@ -40,23 +46,34 @@ class CheckView(check_ui.CheckUI):
         self.text_log.clear()
         rt = []
         for check in self.check_list:
-            ret = check.start_check()
-            print(ret)
-            if ret == True:
-                self.write_check_log(LogLevel.Success, check.name, u"{} Success".format(check.name))
-                rt.append(True)
-            elif isinstance(ret, str):
-                self.write_check_log(LogLevel.ERROR, u"{}".format(check.name), ret)
-                rt.append(False)
-            elif ret == False:
+            # print(check.status.value)
+            if check.status.value == "Skip":
+                continue
+            try:
+                ret = check.start_check()
+                if ret == True:
+                    self.write_check_log(LogLevel.Success, check.name, u"{} Success".format(check.name))
+                    rt.append(True)
+                elif isinstance(ret, str):
+                    self.write_check_log(LogLevel.ERROR, u"{}".format(check.name), ret)
+                    rt.append(False)
+                    break
+                elif ret == False:
+                    self.write_check_log(LogLevel.ERROR, check.name, u"{} Error".format(check.name))
+                    rt.append(False)
+                    break
+            except:
                 self.write_check_log(LogLevel.ERROR, check.name, u"{} Error".format(check.name))
                 rt.append(False)
-            QApplication.processEvents()
+                break
+            finally:
+                QApplication.processEvents()
         if False not in rt:
-            print("Success")
-            # maya_ui = MayaUI()
-            # maya_ui.message_box("提示", "检查通过，正在保存文件", MessageType.information)
-            # maya_file.save(SaveType.ma)
+            QMessageBox.information(self, u"提示", u"检查通过，正在保存文件")
+            maya_file = MayaFileOperatorPy2()
+            maya_file.save(SaveType.ma)
+            self.pub_widget = PublishView()
+            self.pub_widget.run(self.submit_data)
 
     def write_check_log(self, log_level, title, content):
         # 默认白色

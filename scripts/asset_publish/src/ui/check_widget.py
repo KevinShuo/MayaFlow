@@ -25,7 +25,7 @@ class CheckData:
 class TaskStatus(Enum):
     Approve = "Approve"
     Failed = "Failed"
-    Skip = "Ship"
+    Skip = "Skip"
     Common = "Common"
 
 
@@ -52,7 +52,7 @@ class CheckWidget(QFrame):
         self.setupUI()
         self.__style__()
 
-    def __style__(self, style_file = 'check_widget_common'):
+    def __style__(self, style_file='check_widget_common'):
         with open(os.path.join(os.path.dirname(__file__), "qss/{}.qss".format(style_file)), "r+") as qss_file:
             self.setStyleSheet(qss_file.read())
 
@@ -66,9 +66,20 @@ class CheckWidget(QFrame):
         label = QLabel(self.name)
         vbox_main.addWidget(label)
         label.setToolTip(self.description)
+        # 右键菜单
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.add_menu)
 
-        # self.setContextMenuPolicy(Qt.CustomContextMenu)
-        # self.customContextMenuRequested.connect(self.add_menu)
+    def add_menu(self):
+        menu = QMenu()
+        skip = menu.addAction(u"跳过此项")
+        check = menu.addAction(u"检测此项")
+        exec_ = menu.exec_(QCursor.pos())
+        if exec_ == skip:
+            self.skip_check()
+        elif exec_ == check:
+            self.start_check()
+
 
     def start_check(self):
         ret = self.module.start_check()
@@ -85,6 +96,10 @@ class CheckWidget(QFrame):
         elif isinstance(ret, list):
             self.failed()
             return list
+        return None
+
+    def skip_check(self):
+        self.skip()
 
     def common(self):
         self.__style__("check_widget_common")
@@ -99,12 +114,17 @@ class CheckWidget(QFrame):
         self.status = TaskStatus.Failed
 
     def skip(self):
+        if not self.allow_skip:
+            QMessageBox.warning(self, "Error", u"该选项不允许跳过")
+            return None
         if self.status != TaskStatus.Skip and self.allow_skip:
             self.status = TaskStatus.Skip
             self.__style__("check_widget_ship")
+            return None
         else:
             self.status = TaskStatus.Common
             self.common()
+            return None
 
     def mouseDoubleClickEvent(self, event):
         fix_result = self.module.fix()
