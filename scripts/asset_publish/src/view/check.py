@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+import traceback
 from imp import reload
 
 from PySide2.QtGui import QFont, QColor
@@ -46,11 +47,11 @@ class CheckView(check_ui.CheckUI):
         self.text_log.clear()
         rt = []
         for check in self.check_list:
-            # print(check.status.value)
             if check.status.value == "Skip":
                 continue
             try:
                 ret = check.start_check()
+                # print(type(ret))
                 if ret == True:
                     self.write_check_log(LogLevel.Success, check.name, u"{} Success".format(check.name))
                     rt.append(True)
@@ -63,7 +64,7 @@ class CheckView(check_ui.CheckUI):
                     rt.append(False)
                     break
             except:
-                self.write_check_log(LogLevel.ERROR, check.name, u"{} Error".format(check.name))
+                self.write_check_log(LogLevel.ERROR, check.name, traceback.format_exc())
                 rt.append(False)
                 break
             finally:

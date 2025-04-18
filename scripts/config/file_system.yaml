@@ -1,0 +1,5 @@
+file_system:
+  asset:
+    Surfacing:
+      scene: "w_mod_scene"
+      publish_scene: "A"

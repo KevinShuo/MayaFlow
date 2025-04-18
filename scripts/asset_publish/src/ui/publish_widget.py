@@ -45,7 +45,7 @@ class PublishWidget(QFrame):
     def start_execute(self):
         if not hasattr(self.module, "execute"):
             self.failed()
-            return u"模块没有execute"
+            return u"模块没有execute".encode("utf-8")
         ret = self.module.execute()
         if isinstance(ret, bool):
             if ret == True:
@@ -60,7 +60,8 @@ class PublishWidget(QFrame):
         elif isinstance(ret, list):
             self.failed()
             return list
-        return None
+        else:
+            raise AttributeError("No support")
 
     def common(self):
         self.__style__("check_widget_common")

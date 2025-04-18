@@ -81,7 +81,11 @@ class HandlePublishYaml:
         sorted_list = sorted(self.publish_list, key=lambda x: x["order"])
         for item in sorted_list:
             module = importlib.import_module(
-                "asset_publish.src.publish.{item.get('name')}")
+                "asset_publish.src.publish.{}".format(item.get('name')))
+            try:
+                reload(module)
+            except:
+                importlib.reload(module)
             publish_datas.append(
                 PublishData(file_name=item.get("name"), show_name=item.get("show_name"), order=item.get("order"),
                             module=module))
