@@ -6,13 +6,14 @@ from PySide2.QtGui import QPixmap
 from PySide2.QtWidgets import QListWidgetItem, QVBoxLayout, QWidget
 from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 
+from asset_publish.src.ui.startup import StartupUI
+from cache_path.image import CacheImgStratepy
+from m_cgt_py2.src.account.info import CGTAccountPy2
 from m_cgt_py2.src.asset.task import CGTAssetTask
 from m_cgt_py2.src.asset.task_project import CGTAssetTaskProject
 from m_cgt_py2.src.login import NormalUserStrategy
 from m_cgt_py2.src.project.info import CGTProjectInfo
 from m_cgt_py2.src.shot.task_project import CGTShotTaskProject
-from asset_publish.src.ui.startup import StartupUI
-from cache_path.image import CacheImgStratepy
 from .. import config
 from ..config.status_colors import StatusColor
 from ..submit.asset import AssetData, AssetSubmit
@@ -23,6 +24,7 @@ from ..utils.download_img import download_image
 class StartupView(MayaQWidgetDockableMixin, StartupUI):
     def __init__(self, parent=None):
         super(StartupView, self).__init__(parent)
+        self.cgt_account = CGTAccountPy2(NormalUserStrategy())
         self.project_db = None
         self.asset_fields = ["asset.entity", "task.entity", "task.artist", "task.account", "task.start_date",
                              "task.end_date", "asset_type.entity", "pipeline.entity", "task.status", "task.image"]
@@ -66,10 +68,12 @@ class StartupView(MayaQWidgetDockableMixin, StartupUI):
 
     def init_pipeline(self, module):
         self.combo_pipeline.clear()
+
         pipeline_tasks = []
         if module == "Asset":
             cgt_task = CGTAssetTaskProject(self.project_db, NormalUserStrategy())
-            assets_data = cgt_task.get_data([], fields_list=["pipeline.entity", 'asset_type.entity'])
+            assets_data = cgt_task.get_data([['task.account', 'has', self.cgt_account.current_user]],
+                                            fields_list=["pipeline.entity", 'asset_type.entity'])
             if not assets_data:
                 return
             for asset in assets_data:
@@ -78,7 +82,8 @@ class StartupView(MayaQWidgetDockableMixin, StartupUI):
                     pipeline_tasks.append(pipeline)
         else:
             cgt_task = CGTShotTaskProject(self.project_db, NormalUserStrategy())
-            shots_data = cgt_task.get_data([], fields_list=["pipeline.entity", "eps.entity"])
+            shots_data = cgt_task.get_data([['task.account', 'has', self.cgt_account.current_user]],
+                                           fields_list=["pipeline.entity", "eps.entity"])
             if not shots_data:
                 return
             for shot in shots_data:
@@ -103,7 +108,8 @@ class StartupView(MayaQWidgetDockableMixin, StartupUI):
     def init_asset_type(self):
         self.combo_asset_type.clear()
         cgt_task = CGTAssetTaskProject(self.project_db, NormalUserStrategy())
-        datas = cgt_task.get_data([["pipeline.entity", "=", self.pipeline]], ["asset_type.entity"])
+        datas = cgt_task.get_data([["pipeline.entity", "=", self.pipeline], "and",
+                                   ['task.account', 'has', self.cgt_account.current_user]], ["asset_type.entity"])
         if not datas:
             return
         assets_type = []
@@ -118,7 +124,8 @@ class StartupView(MayaQWidgetDockableMixin, StartupUI):
     def init_eps(self):
         self.combo_eps.clear()
         cgt_task = CGTShotTaskProject(self.project_db, NormalUserStrategy())
-        datas = cgt_task.get_data([["pipeline.entity", "=", self.pipeline]], ["eps.entity"])
+        datas = cgt_task.get_data([["pipeline.entity", "=", self.pipeline], "and",
+                                   ['task.account', 'has', self.cgt_account.current_user]], ["eps.entity"])
         if not datas:
             return
         eps_list = []
@@ -138,7 +145,8 @@ class StartupView(MayaQWidgetDockableMixin, StartupUI):
         self.combo_seq.clear()
         cgt_task = CGTShotTaskProject(self.project_db, NormalUserStrategy())
         datas = cgt_task.get_data([["pipeline.entity", "=", self.pipeline], "and",
-                                   ['eps.entity', '=', self.eps]], ["shot.link_seq"])
+                                   ['eps.entity', '=', self.eps], "and",
+                                   ['task.account', 'has', self.cgt_account.current_user]], ["shot.link_seq"])
         if not datas:
             return
         seq_list = []
@@ -158,7 +166,8 @@ class StartupView(MayaQWidgetDockableMixin, StartupUI):
         if self.modules == "Asset":
             cgt_task = CGTAssetTaskProject(self.project_db, NormalUserStrategy())
             datas = cgt_task.get_data([["pipeline.entity", "=", self.pipeline], "and",
-                                       ['asset_type.entity', '=', self.asset_type]], self.asset_fields)
+                                       ['asset_type.entity', '=', self.asset_type], "and",
+                                       ['task.account', 'has', self.cgt_account.current_user]], self.asset_fields)
             if not datas:
                 return
             for asset in datas:
@@ -172,7 +181,8 @@ class StartupView(MayaQWidgetDockableMixin, StartupUI):
             cgt_task = CGTShotTaskProject(self.project_db, NormalUserStrategy())
             shots_data = cgt_task.get_data([["pipeline.entity", "=", self.pipeline], "and",
                                             ["eps.entity", "=", self.eps], "and",
-                                            ["shot.link_seq", "=", self.seq]],
+                                            ["shot.link_seq", "=", self.seq], "and",
+                                            ['task.account', 'has', self.cgt_account.current_user]],
                                            fields_list=["eps.entity", "shot.link_seq", "shot.entity", "task.entity"])
             if not shots_data:
                 return
@@ -288,7 +298,8 @@ class StartupView(MayaQWidgetDockableMixin, StartupUI):
         if self.modules == "Asset":
             asset_name = self.list_task.currentItem().text().split("]")[-1]
             task_name = self.list_task.currentItem().text().split("[")[-1].split("]")[0]
-            asset_data = AssetData(self.project_db,self.asset_type, asset_name, task_name, self.label_artist.text(), self.pipeline,
+            asset_data = AssetData(self.project_db, self.asset_type, asset_name, task_name, self.label_artist.text(),
+                                   self.pipeline,
                                    self.task_id)
             self.asset_submit = AssetSubmit(asset_data)
             self.asset_submit.submit()

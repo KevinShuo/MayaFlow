@@ -26,14 +26,13 @@ class SentNote:
         pass
 
     def build(self):
-        master_node_data = get_maya_info_to_data()
+        self.master_node_data = get_maya_info_to_data()
         self.note_view = NoteView()
-        if master_node_data.module == "asset":
-            self.module = "asset"
-            self.cgt_asset_task = CGTAssetTask(master_node_data.project_database, master_node_data.task_id,
+        print (self.master_node_data.module)
+        if self.master_node_data.module == "asset":
+            self.cgt_asset_task = CGTAssetTask(self.master_node_data.project_database, self.master_node_data.task_id,
                                                NormalUserStrategy())
-            self.note_view.build(master_node_data.module, master_node_data.project_name, master_node_data.task_id,
-                                 master_node_data.pipeline, asset_name=self.cgt_asset_task.asset_name)
+            # self.note_view.build()
         self.note_view.ui.pushButton_sent.clicked.connect(lambda: self.sent_note())
         self.note_view.exec_()
         return True
@@ -42,8 +41,8 @@ class SentNote:
         self.at_text = self.note_view.ui.lineEdit_at.text()
         content = self.note_view.ui.textEdit_content.toPlainText()
         if self.at_text:
-            content = "{}\n{}".format(self.at_text, content)
-        if self.module == "asset":
+            content = "{}\n{}".format(self.at_text, content.encode("utf-8"))
+        if self.master_node_data == "asset":
             self.cgt_asset_task.create_note(content)
             if self.at_text:
                 self.sent_message(content)

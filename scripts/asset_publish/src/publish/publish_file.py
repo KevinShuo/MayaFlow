@@ -54,17 +54,19 @@ class PublishFile:
                         maya_name = maya_rule[0].replace("{ver}", version)
                     else:
                         maya_name = maya_rule
+                    old = self.maya_file.path
                     maya_path = self.maya_file.save_as_temp_file(maya_name)
                     self.cgt_asset_task.publish_file([maya_path], sign_dir=self.publish_scene_sign)
                     os.remove(maya_path)
-                    self.maya_file.new(True)
+                    self.maya_file.open(old)
                     return True
                 else:
+                    old = self.maya_file.path
                     self.ensure_view = ensure_name.EnsureNameView(format_list=maya_rule)
                     self.ensure_view.build()
                     self.ensure_view.ui.pushButton_submit.clicked.connect(self.ensure_name)
                     self.ensure_view.exec_()
-                    self.maya_file.new()
+                    self.maya_file.open(old)
                     return True
 
         except:
@@ -110,7 +112,7 @@ class PublishFile:
         self.cgt_asset_task.publish_file([maya_path], sign_dir=self.publish_scene_sign)
         os.remove(maya_path)
         self.ensure_view.close()
-        self.maya_file.new()
+        # self.maya_file.new()
 
 
 def execute():

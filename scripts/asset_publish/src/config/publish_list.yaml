@@ -10,6 +10,9 @@ proj_temp_test:
       - name: note
         show_name: 填写note信息
         order: 2
+      - name: change_status
+        show_name: 修改任务状态
+        order: 3
 
 proj_xn_tbp:
   abc:
@@ -23,3 +26,6 @@ proj_xn_tbp:
       - name: note
         show_name: 填写note信息
         order: 2
+      - name: change_status
+        show_name: 修改任务状态
+        order: 3
