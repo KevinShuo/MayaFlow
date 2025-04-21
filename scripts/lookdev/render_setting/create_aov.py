@@ -1,7 +1,7 @@
-import mtoa.aovs as aovs
 import maya.cmds as cmds
 import maya.mel as mel
 
+from m_aov_py2.aov_factory import ArnoldAOVFactory
 from m_aov_py2.main import create_aov
 
 
@@ -11,9 +11,9 @@ def main():
         'diffuse', 'albedo', 'emission', 'indirect',
         'specular', 'sss', 'transmission', 'coat', 'sheen'
     ]
-    arnold =
+    arnold = ArnoldAOVFactory()
     for aov in required_aovs:
-        create_aov(aov)
+        create_aov(arnold, aov)
 
 
 def remake_render_settings_ui(renderer="arnold"):
