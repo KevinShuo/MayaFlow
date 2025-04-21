@@ -1,0 +1,53 @@
+QWidget#TurntableUI {
+    background-color: #1A1F2B;
+}
+
+QLabel {
+    color: #FFFFFF;
+    font-family: Arial, serif;
+    font-weight: bold;
+    margin: 5px;
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+QLineEdit {
+    background-color: #292e3b;
+    color: #e0e0e0;
+    border: 1px dotted #414654;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    font-family: Segoe UI, serif;
+    font-size: 12px;
+}
+
+QLineEdit:hover {
+    border: 2px solid #ffecda;
+}
+
+QRadioButton {
+    color: #e0e0e0;
+    padding: 5px;
+    font-family: Arial, serif;
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-size: 12px;
+}
+
+QPushButton#buttonConfig {
+    background-color: #FF4D4D;
+    border: 1px dotted #FF4D4D;
+    border-radius: 10px;
+    height: 30%;
+    color: #FFFFFF;
+    font-family: "Arial Black", serif;
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-size: 14px;
+    padding: 5px;
+}
+QPushButton#buttonConfig:hover{
+    background-color: #ffecda;
+    color: #1A1F2B;
+}

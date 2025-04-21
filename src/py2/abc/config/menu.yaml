@@ -1,0 +1,78 @@
+menu:
+  - label: "ZMDH"
+    type: "menu"
+    order: 0
+    items:
+      - label: "Lookdev"
+        type: "menu"
+        order: 0
+        items:
+          - label: "MaterialCreate"
+            type: "action"
+            order: 0
+            debug: true
+            icon: "add-four.png"
+            interface_file: "lookdev/materialCreator/main"
+          - label: "MaterialConvert"
+            type: "action"
+            order: 1
+            debug: true
+            icon: "switch.png"
+            interface_file: "lookdev/materialConvert/ConverterUI"
+          - label: "ACES -> SRGB"
+            type: "action"
+            order: 2
+            debug: true
+            icon: "modify.png"
+            interface_file: "lookdev/change_color_space"
+          - label: "TurnTable"
+            type: "action"
+            order: 3
+            debug: true
+            icon: "turntable.png"
+            interface_file: "lookdev/Turntable/main"
+          - label: "RenderSetting"
+            type: "action"
+            order: 4
+            debug: true
+            icon: "config.png"
+            interface_file: "lookdev/render_setting/main"
+      - label: "Lighting"
+        type: "menu"
+        order: 1
+        items:
+          - label: "Create_AOVs"
+            type: "action"
+            order: 0
+            debug: true
+            icon: "add-four.png"
+            interface_file: "lighting/create_aov/main"
+          - label: "Assemble"
+            type: "action"
+            order: 1
+            debug: true
+            icon: "components.png"
+            interface_file: "pipeline/abc/lighting_assemble/main"
+          - label: "Convert_USD_TO_Maya"
+            type: "action"
+            order: 2
+            debug: true
+            icon: "file-conversion-one.png"
+            interface_file: "little_tool/convert_ue_shader_to_maya"
+      - label: "ExportABC"
+        type: "action"
+        order: 2
+        debug: true
+        icon: "add-four.png"
+        interface_file: "pipeline/abc/alembic_tool/main"
+      - label: "AssignMat"
+        type: "action"
+        order: 3
+        debug: true
+        icon: "add-four.png"
+        interface_file: "pipeline/abc/assign_mat_abc"
+
+
+
+
+
