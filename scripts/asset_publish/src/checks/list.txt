@@ -13,3 +13,17 @@
 未使用的Shader
 未Freeze Transform
 UVSets命名
+
+Surfacing 拆分出 Mod + Shader
+
+会有找回历史功能的功能
+
+审核  + 拼图
+
+创建大纲
+
+SP出材质球
+
+自动打包贴图到publish服务器上
+
+TX 管理

@@ -14,24 +14,28 @@ class HandleCheckYaml:
         self.mod_type = mod_type
         self.asset_type = asset_type
         self.pipeline = pipeline
-        self.yaml_data = self.get_check_list(project_db, mod_type, pipeline, asset_type)
+        self.yaml_data = []
+        self.get_check_list(project_db, mod_type, pipeline, asset_type)
 
     def get_check_data(self):
-        sorted_list = sorted(self.yaml_data, key=lambda x: x["order"])
+        # print(self.yaml_data)
+        sorted_list = sorted(self.yaml_data, key=lambda x: x["data"]["order"])
         for item in sorted_list:
+            pipeline = item.get("pipeline_name")
+            data = item.get("data")
             module = importlib.import_module(
-                "asset_publish.src.checks.{}.{}".format(self.pipeline, item.get('file_name')))
+                "asset_publish.src.checks.{}.{}".format(pipeline, data.get('file_name')))
             try:
                 from imp import reload
                 reload(module)
             except:
                 importlib.reload(module)
-            yield dataclass.CheckData(item.get("file_name"),
-                                      item.get("show_name"),
-                                      True if str(item.get("show")).lower() == "true" else False,
-                                      True if str(item.get("allow_skip")).lower() == "true" else False,
-                                      True if str(item.get("allow_fix")).lower() == "true" else False,
-                                      item.get("description"),
+            yield dataclass.CheckData(data.get("file_name"),
+                                      data.get("show_name"),
+                                      True if str(data.get("show")).lower() == "true" else False,
+                                      True if str(data.get("allow_skip")).lower() == "true" else False,
+                                      True if str(data.get("allow_fix")).lower() == "true" else False,
+                                      data.get("description"),
                                       module)
 
     def get_check_list(self, project_db, mod, pipeline, asset_type=None):
@@ -62,10 +66,11 @@ class HandleCheckYaml:
         if "parent" in asset_type_data:
             parent_data = asset_type_data.get("parent")
             tokens = re.findall(r"\{(.*?)}", parent_data)
-            db, module, asset_type = tokens
-            return self.get_check_list(db, module, pipeline, asset_type)
+            db, module, asset_type, pipeline = tokens
+            self.get_check_list(db, module, pipeline, asset_type)
         else:
-            return asset_type_data.get(pipeline)
+            check_data = asset_type_data.get(pipeline)
+            self.yaml_data.append({"pipeline_name": pipeline, "data": check_data})
         # return data
 
 

@@ -1,0 +1,94 @@
+一、Mod 阶段检查项
+
+几何结构
+
+四边面为主，无 n 边面。
+
+无非流形（non-manifold）几何体。
+
+无零面积面（zero-area faces）与孤立顶点/边。
+
+法线方向一致；硬边（hard edges）与平滑组设置正确。
+
+拓扑与细节
+
+面片密度（texel density）均匀，符合项目规范。
+
+LOD 模型正确生成并命名（如 _LOD0, _LOD1…）。
+
+多分辨率（multi-res）网格已冻结或正确导出。
+
+命名与组织
+
+顶层仅一个组或模型。
+
+无空组（empty groups）。
+
+无重命名冲突；所有节点有意义命名。
+
+存在唯一空间名（namespace）；无重合模型命名。
+
+变换与属性
+
+Transform 已 Freeze（重置变换为默认）。
+
+在模型上添加材质 ID、自定义属性（materialID、UDIM 等）。
+
+UV 检查
+
+UVSets 命名规范；仅保留所需 UV 通道。
+
+无重叠／翻转 UV；UV shell 间距足够。
+
+UDIM 格式正确（若使用 UDIM）。
+
+场景冗余
+
+删除多余渲染层、隐藏层、相机、灯光、AOV。
+
+历史记录（history）已清除。
+
+
+
+
+
+
+
+
+二、Shader 阶段检查项
+Shader 网络
+
+无未连接／冗余节点。
+
+节点逻辑简洁，功能重复部分已合并。
+
+PBR 贴图集
+
+BaseColor、Roughness、Metallic、Normal、Height、AO 等贴图齐全并正确链接。
+
+贴图格式与色彩空间（sRGB vs Linear）设置符合规范。
+
+材质分配
+
+所有 Mod 上的面均已分配 Shader，无遗漏。
+
+共享材质参数一致，命名统一。
+
+AOV／Render Pass
+
+仅保留项目需要的 AOV（ID、Depth、Cryptomatte…）。
+
+渲染图层设置正确，无多余通道。
+
+Mod 引用一致性
+
+Shader 文件中引用的 Mod 版本、命名空间、路径正确。
+
+文件头注释注明依赖的 Mod 版本号。
+
+测试渲染
+
+在标准灯光（key／fill／backlight）、HDRI、灰球三种场景下进行 Test Render。
+
+检查无破面、贴图拉伸、着色异常。
+

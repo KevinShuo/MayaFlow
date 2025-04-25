@@ -1,7 +1,7 @@
 proj_xn_tbp:
   asset:
     Char:
-      Surfacing:
+      Mod:
         - file_name: check_artist
           show_name: 检查制作者是否为当前用户
           order: 0
@@ -114,12 +114,22 @@ proj_xn_tbp:
           allow_skip: false
           allow_fix: true
           description: 检查UVSets命名
+      Shader:
+        - parent: "{proj_xn_tbp}{asset}{Char}{Mod}"
+        - file_name: texture_colorspace
+          show_name: 检查贴图色彩空间是否正确
+          order: 0
+          show: True
+          allow_skip: false
+          allow_fix: true
+          description: 检查UVSets命名
+
     Prop:
-      parent: "{proj_temp_test}{asset}{Char}"
+      parent: "{proj_temp_test}{asset}{Char}{Mod}"
     Set:
-      parent: "{proj_temp_test}{asset}{Char}"
+      parent: "{proj_temp_test}{asset}{Char}{Mod}"
 
 proj_temp_test:
   asset:
     Char:
-      parent: "{proj_xn_tbp}{asset}{Char}"
+      parent: "{proj_xn_tbp}{asset}{Char}{Mod}"

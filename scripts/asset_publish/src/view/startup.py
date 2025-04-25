@@ -99,6 +99,7 @@ class StartupView(MayaQWidgetDockableMixin, StartupUI):
 
     def change_pipeline(self, pipeline):
         if self.modules == "Asset":
+            self._hide_split()
             self.init_asset_type()
         else:
             self.init_eps()
@@ -299,7 +300,7 @@ class StartupView(MayaQWidgetDockableMixin, StartupUI):
             asset_name = self.list_task.currentItem().text().split("]")[-1]
             task_name = self.list_task.currentItem().text().split("[")[-1].split("]")[0]
             asset_data = AssetData(self.project_db, self.asset_type, asset_name, task_name, self.label_artist.text(),
-                                   self.pipeline,
+                                   self.submit_pipeline,
                                    self.task_id)
             self.asset_submit = AssetSubmit(asset_data)
             self.asset_submit.submit()
@@ -320,6 +321,14 @@ class StartupView(MayaQWidgetDockableMixin, StartupUI):
             self.combo_seq.setHidden(False)
             self.combo_asset_type.setHidden(True)
 
+    def _hide_split(self):
+        if self.pipeline == "Surfacing":
+            self.label_split_pipeline.setHidden(False)
+            self.frame_split_pipeline.setHidden(False)
+        else:
+            self.label_split_pipeline.setHidden(True)
+            self.frame_split_pipeline.setHidden(True)
+
     @property
     def modules(self):
         return self.combo_module.currentText()
@@ -327,6 +336,18 @@ class StartupView(MayaQWidgetDockableMixin, StartupUI):
     @property
     def pipeline(self):
         return self.combo_pipeline.currentText()
+
+    @property
+    def submit_pipeline(self):
+        """
+            surfacing流程要拆分出mod和shader俩个流程
+        """
+        pipeline = self.combo_pipeline.currentText()
+        # surfacing 流程 要拆分出mod和 shader俩个流程
+        if pipeline == "Surfacing":
+            return "Mod" if self.radio_mod.isChecked() else "Shader"
+        else:
+            return pipeline
 
     @property
     def asset_type(self):
@@ -343,6 +364,9 @@ class StartupView(MayaQWidgetDockableMixin, StartupUI):
     @property
     def task_name(self):
         return self.label_task_name.text()
+
+    def __del__(self):
+        print("Delete UI")
 
     # def resizeEvent(self, event):
     #     print(event.size())

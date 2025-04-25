@@ -3,7 +3,7 @@ import os
 
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QWidget, QFrame, QVBoxLayout, QFormLayout, QLabel, QComboBox, QListWidget, QHBoxLayout, \
-    QPushButton, QGroupBox, QScrollArea, QTextEdit, QSizePolicy
+    QPushButton, QGroupBox, QScrollArea, QTextEdit, QSizePolicy, QRadioButton
 
 from asset_publish.src.config import G_window_title, G_version
 from asset_publish.src.ui.note import ImageLabel
@@ -43,6 +43,19 @@ class StartupUI(QWidget):
         self.combo_pipeline = QComboBox()
         self.combo_pipeline.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         form_top.addRow(label_pipeline, self.combo_pipeline)
+        # split mod and shader
+        self.label_split_pipeline = QLabel("Subject:")
+        self.label_split_pipeline.setHidden(True)
+        self.frame_split_pipeline = QFrame()
+        self.frame_split_pipeline.setHidden(True)
+        hbox_split_pipeline = QHBoxLayout(self.frame_split_pipeline)
+        hbox_split_pipeline.setContentsMargins(0, 0, 0, 0)
+        self.radio_mod = QRadioButton("Mod")
+        self.radio_mod.setChecked(True)
+        self.radio_shader = QRadioButton("Shader")
+        hbox_split_pipeline.addWidget(self.radio_mod)
+        hbox_split_pipeline.addWidget(self.radio_shader)
+        form_top.addRow(self.label_split_pipeline, self.frame_split_pipeline)
         # asset_type
         self.label_asset_type = QLabel("Asset Type:")
         self.combo_asset_type = QComboBox()
@@ -87,6 +100,7 @@ class StartupUI(QWidget):
         label_info_pipeline = QLabel("Pipeline:")
         self.label_info_pipeline = QLabel()
         form_info.addRow(label_info_pipeline, self.label_info_pipeline)
+
         # artist
         label_artist = QLabel("Artist:")
         self.label_artist = QLabel()
