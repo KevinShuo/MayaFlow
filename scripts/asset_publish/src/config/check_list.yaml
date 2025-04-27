@@ -115,7 +115,6 @@ proj_xn_tbp:
           allow_fix: true
           description: 检查UVSets命名
       Shader:
-        - parent: "{proj_xn_tbp}{asset}{Char}{Mod}"
         - file_name: texture_colorspace
           show_name: 检查贴图色彩空间是否正确
           order: 0
@@ -132,4 +131,7 @@ proj_xn_tbp:
 proj_temp_test:
   asset:
     Char:
-      parent: "{proj_xn_tbp}{asset}{Char}{Mod}"
+      Mod:
+        parent: "{proj_xn_tbp}{asset}{Char}{Mod}"
+      Shader:
+        parent: "{proj_xn_tbp}{asset}{Char}{Shader}"

@@ -64,6 +64,8 @@ def get_maya_info_to_data():
 
 
 def read_file_system_get_pipeline_data(module, pipeline):
+    if pipeline in ["Mod", "Shader"]:
+        pipeline = "Surfacing"
     config_data = read_yaml(os.path.abspath(
         os.path.join(os.path.dirname(__file__), "config/file_system.yaml")))
     module_data = config_data.get("file_system").get(module)

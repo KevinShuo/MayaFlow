@@ -299,6 +299,7 @@ class StartupView(MayaQWidgetDockableMixin, StartupUI):
         if self.modules == "Asset":
             asset_name = self.list_task.currentItem().text().split("]")[-1]
             task_name = self.list_task.currentItem().text().split("[")[-1].split("]")[0]
+            print(self.submit_pipeline)
             asset_data = AssetData(self.project_db, self.asset_type, asset_name, task_name, self.label_artist.text(),
                                    self.submit_pipeline,
                                    self.task_id)

@@ -37,6 +37,12 @@ menu:
             debug: true
             icon: "config.png"
             interface_file: "lookdev/render_setting/main"
+          - label: "TX_Manager"
+            type: "action"
+            order: 5
+            debug: true
+            icon: "config.png"
+            interface_file: "lookdev/tx_manager/main"
       - label: "Lighting"
         type: "menu"
         order: 1

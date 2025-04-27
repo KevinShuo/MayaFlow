@@ -31,14 +31,14 @@ class TurnTable(turntable_ui.TurntableUI):
         self.button_config.clicked.connect(self.full)
 
     def config_hdr_path(self):
-        file_path, _ = QFileDialog.getOpenFileName(self, "请选择hdr文件", "c:/", "exr文件 (*.exr *.hdr)")
+        file_path, _ = QFileDialog.getOpenFileName(self, u"请选择hdr文件", u"c:/", u"exr文件 (*.exr *.hdr)")
         if not file_path:
             return
         self.lineEdit_hdr.setText(file_path)
 
     def full(self):
         if not self.check_attribute():
-            QMessageBox.critical(self, "错误", "请检查参数是否齐全")
+            QMessageBox.critical(self, u"错误", u"请检查参数是否齐全")
             return
         if not cmds.ls("Lightrigs"):
             cmds.file(self.maya_path, i=True)

@@ -1,6 +1,6 @@
 proj_temp_test:
   abc:
-    Surfacing:
+    Mod:
       - name: check_task
         show_name: 确认任务信息
         order: 0
@@ -16,7 +16,7 @@ proj_temp_test:
 
 proj_xn_tbp:
   abc:
-    Surfacing:
+    Mod:
       - name: check_task
         show_name: 确认任务信息
         order: 0

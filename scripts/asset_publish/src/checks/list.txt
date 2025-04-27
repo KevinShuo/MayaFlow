@@ -16,7 +16,7 @@ UVSets命名
 
 Surfacing 拆分出 Mod + Shader
 
-会有找回历史功能的功能
+会有找回历史功能
 
 审核  + 拼图
 
